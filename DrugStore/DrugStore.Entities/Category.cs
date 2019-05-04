@@ -2,7 +2,7 @@
 
 namespace DrugStore.Entities
 {
-    public class Class1
+    public class Category
     {
         public int IdCategory { get; set; }
         public string Name { get; set; }
