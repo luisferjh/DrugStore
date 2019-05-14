@@ -9,7 +9,7 @@ namespace DrugStore.Entities.Sales
     {
         public int IdSale { get; set; }
         public int IdUser { get; set; }
-        public int IdClient { get; set; }
+        public int? IdClient { get; set; }
         public string TypeSale { get; set; }
         public string VoucherSeries { get; set; }
         public string VoucherNumber { get; set; }

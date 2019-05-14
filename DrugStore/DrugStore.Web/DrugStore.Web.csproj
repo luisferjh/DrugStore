@@ -3,11 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>a6cdc46b-5511-4eca-aeb3-b3dacef5c301</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DrugStore.Data\DrugStore.Data.csproj" />
+    <ProjectReference Include="..\DrugStore.Entities\DrugStore.Entities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@ namespace DrugStore.Entities.Users
         public Boolean Condition { get; set; }
 
         public Role Role { get; set; }
-        public ICollection<SaleDetail> SalesDetails { get; set; }
-        public ICollection<OrderIncome> OrderDetails { get; set; }
+        public ICollection<Sale> Sales { get; set; }
+        public ICollection<OrderIncome> OrderIncomes { get; set; }
     }
 }

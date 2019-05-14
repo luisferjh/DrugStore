@@ -12,7 +12,8 @@ namespace DrugStore.Entities.Sales
         public int IdProduct { get; set; }
         public int Amount { get; set; }
         public decimal Discount { get; set; }
-        public decimal Price { get; set; }
+        public decimal UnitCost { get; set; }
+        public decimal UnitPrice { get; set; }
 
         public Sale Sale { get; set; }
         public Product Products { get; set; }

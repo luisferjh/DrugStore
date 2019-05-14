@@ -8,7 +8,7 @@ namespace DrugStore.Entities.Orders
 {
     public class OrderIncome
     {
-        public int IdOrder { get; set; }
+        public int IdOrderIncome { get; set; }
         public int IdProvider { get; set; }
         public int IdUser { get; set; }
         public DateTime DateEntry { get; set; }

@@ -11,7 +11,7 @@ namespace DrugStore.Entities.Orders
         public int IdOrderIncome { get; set; }
         public int IdProduct { get; set; }
         public int Amount { get; set; }
-        public decimal Price { get; set; }
+        public decimal UnitCost { get; set; }
 
         public Product Product { get; set; }
         public OrderIncome OrderIncome { get; set; }
