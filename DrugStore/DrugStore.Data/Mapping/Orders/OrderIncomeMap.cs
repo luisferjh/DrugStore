@@ -12,8 +12,7 @@ namespace DrugStore.Data.Mapping.Sales
         public void Configure(EntityTypeBuilder<OrderIncome> builder)
         {
             // Validations
-            builder.Property(x => x.DateEntry).IsRequired();
-            builder.Property(x => x.Amount).IsRequired();
+            builder.Property(x => x.DateEntry).IsRequired();           
             builder.Property(x => x.Total).IsRequired();
             builder.Property(x => x.State).HasMaxLength(20);
 
@@ -22,7 +21,7 @@ namespace DrugStore.Data.Mapping.Sales
                   .HasKey(p => p.IdOrderIncome);
 
             //Cascade Overrired on Provider Entity
-            builder.HasOne(x => x.provider)
+            builder.HasOne(x => x.Provider)
               .WithMany(x => x.OrderIncomes)
               .OnDelete(DeleteBehavior.Restrict);
 

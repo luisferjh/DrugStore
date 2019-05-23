@@ -1,12 +1,11 @@
-﻿using DrugStore.Entities.Orders;
-using DrugStore.Entities.Sales;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace DrugStore.Entities.Users
+namespace DrugStore.Web.Models.People.User
 {
-    public class User
+    public class UserViewModel
     {
         public int IdUser { get; set; }
         public int IdRole { get; set; }
@@ -16,12 +15,7 @@ namespace DrugStore.Entities.Users
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        public byte[] PasswordHash { get; set; }       
         public Boolean Condition { get; set; }
-
-        public Role Role { get; set; }
-        public ICollection<Sale> Sales { get; set; }
-        public ICollection<OrderIncome> OrderIncomes { get; set; }
     }
 }

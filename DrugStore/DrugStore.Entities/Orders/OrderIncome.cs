@@ -12,12 +12,11 @@ namespace DrugStore.Entities.Orders
         public int IdProvider { get; set; }
         public int IdUser { get; set; }
         public DateTime DateEntry { get; set; }
-        public int Amount { get; set; }
         public decimal Total { get; set; }
         public string State { get; set; }
 
         public ICollection<OrderIncomeDetails> OrderIncomeDetails { get; set; }
         public User User { get; set; }
-        public Provider provider { get; set; }
+        public Provider Provider { get; set; }
     }
 }
