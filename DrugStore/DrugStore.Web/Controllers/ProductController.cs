@@ -61,6 +61,10 @@ namespace DrugStore.Web.Controllers
             {
                 return BadRequest();
             }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 
@@ -82,16 +86,16 @@ namespace DrugStore.Web.Controllers
             {
                 await _productService.UpdateProduct(product);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (NullReferenceException)
             {
                 if (!(await _productService.ProductExists(product.IdProduct)))
                 {
                     return NotFound();
                 }
-                else
-                {
-                    return BadRequest();
-                }
+            }
+            catch (DbUpdateException)
+            {               
+                return BadRequest();                
             }
                       
             return Ok();
@@ -107,14 +111,12 @@ namespace DrugStore.Web.Controllers
             {
                 return NotFound();
             }
-
             try
             {
                 await _productService.DeleteProduct(product);
             }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                Console.WriteLine(ex);
+            catch (DbUpdateException)
+            {          
                 return BadRequest();
             }
             return Ok(product);

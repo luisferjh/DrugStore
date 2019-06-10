@@ -15,10 +15,9 @@ namespace DrugStore.Data.Mapping.Store
             builder.Property(x => x.ProductName).HasMaxLength(50).IsRequired();
             builder.Property(x => x.BarCode).HasMaxLength(50);
             builder.Property(x => x.Indicative).HasMaxLength(250);
-            builder.Property(x => x.Stock).IsRequired();
-            builder.Property(x => x.DueDate).IsRequired();
+            builder.Property(x => x.Stock).IsRequired();  
             builder.Property(x => x.Price).IsRequired();
-
+         
             // Relations
             builder.ToTable("Product")
                 .HasKey(p => p.IdProduct);

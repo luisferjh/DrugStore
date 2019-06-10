@@ -14,6 +14,7 @@ namespace DrugStore.Web.Models.Orders.Order
         public string User { get; set; }
         public DateTime DateEntry { get; set; }
         public int Amount { get; set; }
+        public DateTime DueDate { get; set; }
         public decimal Total { get; set; }
         public string State { get; set; }
     }

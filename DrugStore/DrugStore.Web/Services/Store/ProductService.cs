@@ -34,8 +34,7 @@ namespace DrugStore.Web.Services.Store
                 ProductName = product.ProductName,
                 BarCode = product.BarCode,
                 Indicative = product.Indicative,
-                Stock = product.Stock,
-                DueDate = product.DueDate,
+                Stock = product.Stock,                
                 Price = product.Price,
                 Condition = product.Condition
             };
@@ -57,8 +56,7 @@ namespace DrugStore.Web.Services.Store
                 ProductName = p.ProductName,
                 BarCode = p.BarCode,
                 Indicative = p.Indicative,
-                Stock = p.Stock,
-                DueDate = p.DueDate,
+                Stock = p.Stock,               
                 Price = p.Price,
                 Condition = p.Condition
             });
@@ -73,13 +71,12 @@ namespace DrugStore.Web.Services.Store
                 ProductName = model.ProductName,
                 BarCode = model.BarCode,
                 Indicative = model.Indicative,
-                Stock = model.Stock,
-                DueDate = model.DueDate,
+                Stock = model.Stock,                
                 Price = model.Price,
                 Condition = model.Condition
             };
 
-            _context.Products.Add(product);
+            await _context.Products.AddAsync(product);
 
             await _context.SaveChangesAsync();           
         }
@@ -94,8 +91,7 @@ namespace DrugStore.Web.Services.Store
             product.ProductName = model.ProductName;
             product.BarCode = model.BarCode;
             product.Indicative = model.Indicative;
-            product.Stock = model.Stock;
-            product.DueDate = model.DueDate;
+            product.Stock = model.Stock;            
             product.Price = model.Price;
             product.Condition = model.Condition;         
 

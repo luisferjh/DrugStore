@@ -59,7 +59,10 @@ namespace DrugStore.Web.Controllers
             {
                 return BadRequest();
             }
-
+            catch (Exception)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 

@@ -34,7 +34,7 @@ namespace DrugStore.Web.Services.Orders
                Proveedor = o.Provider.ProviderName,
                IdUser = o.IdUser,
                User = o.User.UserName,
-               DateEntry = o.DateEntry,              
+               DateEntry = o.DateEntry,                  
                Total = o.Total,
                State = o.State
             });
@@ -90,6 +90,7 @@ namespace DrugStore.Web.Services.Orders
                     IdOrderIncome = IdOrderIncome,
                     IdProduct = det.IdProduct,
                     Amount = det.Amount,
+                    DueDate = det.DueDate,
                     UnitCost = det.UnitCost
                 };
                 _context.OrderIncomeDetails.Add(detail);

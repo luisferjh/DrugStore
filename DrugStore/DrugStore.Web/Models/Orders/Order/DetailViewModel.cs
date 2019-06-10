@@ -13,6 +13,7 @@ namespace DrugStore.Web.Models.Orders.Order
         [Required]
         public int Amount { get; set; }
         [Required]
+        public DateTime DueDate { get; set; }
         public decimal UnitCost { get; set; }
     }
 }

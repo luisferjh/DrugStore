@@ -60,8 +60,11 @@ namespace DrugStore.Web.Controllers
             catch (DbUpdateException)
             {
                 return BadRequest();
-            }          
-
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 

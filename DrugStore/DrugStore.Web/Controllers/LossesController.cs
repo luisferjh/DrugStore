@@ -49,7 +49,6 @@ namespace DrugStore.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             try
             {
                 await _lossesService.AddLoss(lossModel);
@@ -58,7 +57,10 @@ namespace DrugStore.Web.Controllers
             {
                 return BadRequest();
             }
-
+            catch (Exception)
+            {
+                return BadRequest();
+            }
             return Ok();
         }
 
