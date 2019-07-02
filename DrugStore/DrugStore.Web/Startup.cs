@@ -1,9 +1,11 @@
 using System;
+using System.Text;
 using DrugStore.Data;
 using DrugStore.Web.Services.Orders;
 using DrugStore.Web.Services.People;
 using DrugStore.Web.Services.Sales;
 using DrugStore.Web.Services.Store;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DrugStore.Web
 {
@@ -27,6 +30,21 @@ namespace DrugStore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]))
+                    };
+                });
+
             services.AddDbContext<DbContextDrugStore>(options =>
             options.UseSqlServer(Configuration["DrugStore:ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -41,6 +59,7 @@ namespace DrugStore.Web
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<ISaleService, SaleService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<IUserService, UserService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -72,6 +91,7 @@ namespace DrugStore.Web
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

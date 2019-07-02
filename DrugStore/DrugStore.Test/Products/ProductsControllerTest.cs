@@ -319,8 +319,7 @@ namespace DrugStore.Test.Products
             var productOk = await controller.Delete(postId);
             var resultListProducts = await controller.List();
 
-            //Assert  
-            //Assert.Equal(1, );
+            //Assert   
             resultListProducts.Should().NotBeEmpty().And.HaveCount(1);
         }
 
