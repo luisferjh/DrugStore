@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DrugStore.Web.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -31,9 +33,72 @@ namespace DrugStore.Web.Controllers
 
         // GET: api/User/5
         [HttpGet("[action]/{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
-            return "value";
+            var user = await _userService.GetUser(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        // PUT: api/User/Activate/1
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activate([FromRoute] int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _userService.DeactivateUser(id);
+            }
+            catch (NullReferenceException ex)
+            {
+                if (!(await _userService.UserExists(id)))
+                {
+                    return NotFound(ex);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/User/Deactivate/1
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Deactivate([FromRoute] int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _userService.DeactivateUser(id);
+            }
+            catch (NullReferenceException ex)
+            {
+                if (!(await _userService.UserExists(id)))
+                {
+                    return NotFound(ex);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok();
         }
 
         // POST: api/User
@@ -42,7 +107,7 @@ namespace DrugStore.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
 
             try
@@ -61,16 +126,38 @@ namespace DrugStore.Web.Controllers
             return Ok();
         }
 
-        // PUT: api/User/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // PUT: api/User/Update
+        [HttpPut("[action]")]
+        public async Task<IActionResult> Update([FromBody] UpdateViewModel model)
         {
-        }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (model.IdUser <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _userService.UpdateUser(model);
+            }
+            catch (NullReferenceException ex)
+            {
+                if (!(await _userService.UserExists(model.IdUser)))
+                {
+                    return NotFound(ex);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok();
         }
+       
     }
 }

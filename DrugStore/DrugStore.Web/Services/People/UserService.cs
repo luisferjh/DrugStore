@@ -138,23 +138,54 @@ namespace DrugStore.Web.Services.People
             }
         }
 
-        public Task UpdateUser(UpdateViewModel UserModel)
+        public async Task UpdateUser(UpdateViewModel UserModel)
         {
-            throw new NotImplementedException();
-        }
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == UserModel.IdUser);
 
-        public Task DeleteUser(User user)
-        {
-            throw new NotImplementedException();
-        }
+            user.IdUser = UserModel.IdUser;
+            user.IdRole = UserModel.IdRole;
+            user.UserName = UserModel.UserName;
+            user.DocumentType = UserModel.DocumentType;
+            user.DocumentNumber = UserModel.DocumentNumber;
+            user.Address = UserModel.Address;
+            user.PhoneNumber = UserModel.PhoneNumber;
+            user.Email = UserModel.Email;
 
-        public Task<bool> UserExists(int id)
+            if (UserModel.act_Password == true)
+            {
+                CreatePassword(UserModel.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
+            await _context.SaveChangesAsync();
+        }  
+
+        public async Task<bool> UserExists(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Users.AnyAsync(u => u.IdUser == id);
         }
         public Task<User> SearchUser(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task ActivateUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == id);
+
+            user.Condition = true;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeactivateUser(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == id);
+
+            user.Condition = false;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

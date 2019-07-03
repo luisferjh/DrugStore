@@ -2,45 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DrugStore.Web.Models.People.User;
+using DrugStore.Web.Services.People;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrugStore.Web.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
-        // GET: api/Login
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserService _userService;
+        public LoginController(IUserService userService)
         {
-            return new string[] { "value1", "value2" };
+            _userService = userService;
         }
 
-        // GET: api/Login/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Login
+        // POST: api/User/Login
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-        }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
-        // PUT: api/Login/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            var userCredentials = await _userService.Login(model);
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (userCredentials == null)
+            {
+                return NotFound();
+            }
+
+            if (!_userService.CheckPassword(model.Password, userCredentials.PasswordHash, userCredentials.PasswordSalt))
+            {
+                return NotFound();
+            }
+
+            var token = _userService.GenerateToken(userCredentials);
+
+            return Ok(new { token = token });
         }
+        
     }
 }

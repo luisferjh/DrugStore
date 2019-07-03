@@ -15,6 +15,6 @@ namespace DrugStore.Web.Models.People.User
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }     
-        public Boolean Condition { get; set; }
+        public bool Condition { get; set; }
     }
 }

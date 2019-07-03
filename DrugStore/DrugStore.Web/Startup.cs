@@ -59,6 +59,7 @@ namespace DrugStore.Web
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<ISaleService, SaleService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
+            services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
 
             // In production, the React files will be served from this directory

@@ -16,8 +16,9 @@ namespace DrugStore.Web.Services.People
         void CreatePassword(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool CheckPassword(string password, byte[] passwordHashStored, byte[] passwordSaltStored);
         string GenerateToken(UserLoginViewModel user);
-        Task UpdateUser(UpdateViewModel UserModel);
-        Task DeleteUser(User user);
+        Task UpdateUser(UpdateViewModel UserModel);       
+        Task ActivateUser(int id);
+        Task DeactivateUser(int id);
         Task<bool> UserExists(int id);
         Task<User> SearchUser(int id);
     }
