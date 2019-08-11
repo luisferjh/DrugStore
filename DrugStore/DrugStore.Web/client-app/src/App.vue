@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <AppNavigation />    
+    <AppNavigation v-if="loggedIn" />    
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -18,6 +18,11 @@ export default {
     return {
      
     };
-  }
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.user
+    }
+  },
 };
 </script>

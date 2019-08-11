@@ -20,7 +20,7 @@
     <v-divider></v-divider>
 
      <v-list dense>
-        <v-list-item @click="">
+        <v-list-item :to="{name:'home'}">
           <v-list-item-icon>
             <v-icon>home</v-icon>
           </v-list-item-icon>
@@ -39,7 +39,7 @@
             </v-list-item-content>                    
         </template>       
      
-        <v-list-item @click="">
+        <v-list-item :to="{name:'product'}">
            <v-list-item-action>
             <v-icon></v-icon>
           </v-list-item-action>  
@@ -53,7 +53,7 @@
                   
       </v-list-group>
 
-        <v-list-item @click="">
+        <v-list-item :to="{name:'about'}">
           <v-list-item-icon>
             <v-icon>shopping_cart</v-icon>
           </v-list-item-icon>
@@ -62,7 +62,7 @@
           </v-list-item-content>
         </v-list-item>
 
-         <v-list-item @click="">
+         <v-list-item>
           <v-list-item-icon>
             <v-icon>account_box</v-icon>
           </v-list-item-icon>

@@ -21,7 +21,7 @@ namespace DrugStore.Web.Controllers
             _userService = userService;
         }
 
-        // POST: api/User/Login
+        // POST: api/Login
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {

@@ -19,7 +19,7 @@ namespace DrugStore.Data.Mapping.People
             builder.Property(x => x.Address).HasMaxLength(70);
             builder.Property(x => x.PhoneNumber).HasMaxLength(20);
             builder.Property(x => x.Email).HasMaxLength(70).IsRequired();
-            builder.Property(x => x.PasswordHash).HasMaxLength(64).IsRequired();
+            builder.Property(x => x.PasswordHash).HasColumnType("").HasMaxLength(64).IsRequired();
             builder.Property(x => x.PasswordSalt).HasMaxLength(64).IsRequired();
             builder.Property(x => x.Condition).IsRequired();
 
