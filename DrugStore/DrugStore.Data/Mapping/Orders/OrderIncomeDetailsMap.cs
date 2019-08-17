@@ -13,7 +13,7 @@ namespace DrugStore.Data.Mapping.Sales
         {
             // validations
             builder.Property(x => x.Amount).IsRequired();
-            builder.Property(x => x.UnitCost).IsRequired();
+            builder.Property(x => x.UnitCost).HasColumnType("decimal(11,2)").IsRequired();
 
             //Relations
             builder.ToTable("OrderIncomeDetails")

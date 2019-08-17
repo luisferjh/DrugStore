@@ -34,7 +34,7 @@ namespace DrugStore.Web.Services.Orders
                Proveedor = o.Provider.ProviderName,
                IdUser = o.IdUser,
                User = o.User.UserName,
-               DateEntry = o.DateEntry,                  
+               //DateEntry = o.DateEntry,                  
                Total = o.Total,
                State = o.State
             });
@@ -55,7 +55,7 @@ namespace DrugStore.Web.Services.Orders
                 Proveedor = order.Provider.ProviderName,
                 IdUser = order.IdUser,
                 User = order.User.UserName,
-                DateEntry = order.DateEntry,                
+                //DateEntry = order.DateEntry,                
                 Total = order.Total,
                 State = order.State
             };
@@ -70,7 +70,7 @@ namespace DrugStore.Web.Services.Orders
             {               
                 IdProvider = orderModel.IdProvider,
                 IdUser = orderModel.IdUser,
-                DateEntry = dateOrderIncome,                
+                //DateEntry = dateOrderIncome,                
                 Total = orderModel.Total,
                 State = "Accept"
             };
@@ -107,7 +107,7 @@ namespace DrugStore.Web.Services.Orders
             order.IdOrderIncome = orderModel.IdOrderIncome;
             order.IdProvider = orderModel.IdProvider;
             order.IdUser = orderModel.IdUser;
-            order.DateEntry = orderModel.DateEntry;           
+            //order.DateEntry = orderModel.DateEntry;           
             order.Total = orderModel.Total;
             order.State = orderModel.State;
 

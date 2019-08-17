@@ -13,9 +13,9 @@ namespace DrugStore.Data.Mapping.Sales
         {
             //Validations
             builder.Property(x => x.Amount).IsRequired();
-            builder.Property(x => x.Discount).IsRequired();
-            builder.Property(x => x.UnitCost).IsRequired();
-            builder.Property(x => x.UnitPrice).IsRequired(); 
+            builder.Property(x => x.Discount).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.UnitCost).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.UnitPrice).HasColumnType("decimal(11,2)").IsRequired(); 
 
 
             // Relations

@@ -23,7 +23,7 @@ namespace DrugStore.Web.Services.Store
             return losses.Select(l => new LossesViewModel
             {
                 IdLosses = l.IdLosses,
-                DateLoss = l.DateLoss,
+                //DateLoss = l.DateLoss,
                 Cause = l.Cause,
                 State = l.State
             });
@@ -40,7 +40,7 @@ namespace DrugStore.Web.Services.Store
             return new LossesViewModel
             {
                 IdLosses = loss.IdLosses,
-                DateLoss = loss.DateLoss,
+                //DateLoss = loss.DateLoss,
                 Cause = loss.Cause,
                 State = loss.State
             };
@@ -50,7 +50,7 @@ namespace DrugStore.Web.Services.Store
         {
             Losses losses = new Losses
             {
-                DateLoss = lossModel.DateLoss,
+                //DateLoss = lossModel.DateLoss,
                 Cause = lossModel.Cause,
                 State = lossModel.State
             };
@@ -65,7 +65,7 @@ namespace DrugStore.Web.Services.Store
             var loss = await _context.Losses.FirstOrDefaultAsync(l =>
             l.IdLosses == lossModel.IdLosses);
 
-            loss.DateLoss = lossModel.DateLoss;
+            //loss.DateLoss = lossModel.DateLoss;
             loss.Cause = lossModel.Cause;
             loss.State = lossModel.State;
 

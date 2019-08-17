@@ -1,4 +1,5 @@
-﻿using DrugStore.Entities.Orders;
+﻿using DrugStore.Entities.Log;
+using DrugStore.Entities.Orders;
 using DrugStore.Entities.Sales;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Text;
 
 namespace DrugStore.Entities.Users
 {
+    [Auditable]
     public class User
     {
         public int IdUser { get; set; }

@@ -12,8 +12,8 @@ namespace DrugStore.Data.Mapping.People
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             //Validations
-            builder.Property(x => x.RoleName).HasMaxLength(30).IsRequired();
-            builder.Property(x => x.Description).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.RoleName).HasColumnType("varchar(30)").IsRequired();
+            builder.Property(x => x.Description).HasColumnType("varchar(100)").IsRequired();
             builder.Property(x => x.Condition).IsRequired();
 
             //Relations

@@ -12,12 +12,11 @@ namespace DrugStore.Data.Mapping.Sales
         public void Configure(EntityTypeBuilder<Sale> builder)
         {
             // Validations
-            builder.Property(x => x.TypeSale).HasMaxLength(20).IsRequired();
-            builder.Property(x => x.VoucherSeries).HasMaxLength(7);
-            builder.Property(x => x.VoucherNumber).HasMaxLength(10).IsRequired();
-            builder.Property(x => x.SaleDate).IsRequired();
-            builder.Property(x => x.TotalPrice).IsRequired();
-            builder.Property(x => x.State).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.TypeSale).HasColumnType("varchar(20)").IsRequired();
+            builder.Property(x => x.VoucherSeries).HasColumnType("varchar(7)").IsRequired();
+            builder.Property(x => x.VoucherNumber).HasColumnType("varchar(10)").IsRequired();       
+            builder.Property(x => x.TotalPrice).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.State).HasColumnType("varchar(20)").IsRequired();
 
             // Relations
             builder.ToTable("Sale")

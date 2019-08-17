@@ -25,7 +25,7 @@ namespace DrugStore.Web.Services.Sales
                 IdSale = d.IdSale,
                 IdClient = d.IdClient,
                 Adress = d.Adress,
-                Date = d.Date,
+                //Date = d.Date,
                 State = d.State
             });
         }
@@ -42,7 +42,7 @@ namespace DrugStore.Web.Services.Sales
                 IdSale = delivery.IdSale,
                 IdClient = delivery.IdClient,
                 Adress = delivery.Adress,
-                Date = delivery.Date,
+                //Date = delivery.Date,
                 State = delivery.State
             };
         }
@@ -54,7 +54,7 @@ namespace DrugStore.Web.Services.Sales
                 IdSale = deliveryModel.IdSale,
                 IdClient = deliveryModel.IdClient,
                 Adress = deliveryModel.Adress,
-                Date = deliveryModel.Date,
+                //Date = deliveryModel.Date,
                 State = deliveryModel.State
             };
 
@@ -70,7 +70,7 @@ namespace DrugStore.Web.Services.Sales
             delivery.IdSale = deliveryModel.IdSale;
             delivery.IdClient = deliveryModel.IdClient;
             delivery.Adress = deliveryModel.Adress;
-            delivery.Date = deliveryModel.Date;
+            //delivery.Date = deliveryModel.Date;
             delivery.State = deliveryModel.State;
 
             await _context.SaveChangesAsync();

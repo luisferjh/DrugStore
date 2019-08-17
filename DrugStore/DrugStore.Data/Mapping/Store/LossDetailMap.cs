@@ -12,7 +12,7 @@ namespace DrugStore.Data.Mapping.Store
         public void Configure(EntityTypeBuilder<LossDetail> builder)
         {
             // Validations
-            builder.Property(x => x.UnitCost).IsRequired();
+            builder.Property(x => x.UnitCost).HasColumnType("decimal(11,2)").IsRequired();
             builder.Property(x => x.Amount).IsRequired();
 
             // Relations

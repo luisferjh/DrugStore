@@ -1,13 +1,14 @@
-﻿using System;
+﻿using DrugStore.Entities.Log;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DrugStore.Entities.Store
 {
+    [Auditable]
     public class Losses
     {
         public int IdLosses { get; set; }
-        public DateTime DateLoss { get; set; }
         public string Cause { get; set; }
         public string State { get; set; }
 

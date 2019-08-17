@@ -12,11 +12,11 @@ namespace DrugStore.Data.Mapping.Store
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             // Validations
-            builder.Property(x => x.ProductName).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.BarCode).HasMaxLength(50);
-            builder.Property(x => x.Indicative).HasMaxLength(250);
+            builder.Property(x => x.ProductName).HasColumnType("varchar(50)").IsRequired();
+            builder.Property(x => x.BarCode).HasColumnType("varchar(50)");
+            builder.Property(x => x.Indicative).HasColumnType("varchar(250)");
             builder.Property(x => x.Stock).IsRequired();  
-            builder.Property(x => x.Price).IsRequired();
+            builder.Property(x => x.Price).HasColumnType("decimal(11,2)").IsRequired();
          
             // Relations
             builder.ToTable("Product")

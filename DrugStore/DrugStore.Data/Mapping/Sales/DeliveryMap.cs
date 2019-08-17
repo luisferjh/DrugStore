@@ -12,9 +12,8 @@ namespace DrugStore.Data.Mapping.Sales
         public void Configure(EntityTypeBuilder<Delivery> builder)
         {
             //Validations
-            builder.Property(x => x.Adress).HasMaxLength(30).IsRequired();
-            builder.Property(x => x.Date).IsRequired();
-            builder.Property(x => x.State).HasMaxLength(20).IsRequired();
+            builder.Property(x => x.Adress).HasColumnType("varchar(30)").IsRequired();           
+            builder.Property(x => x.State).HasColumnType("varchar(20)").IsRequired();
 
             // Relations
             builder.ToTable("Delivery")

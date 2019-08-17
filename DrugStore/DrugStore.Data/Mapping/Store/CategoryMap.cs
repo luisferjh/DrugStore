@@ -12,8 +12,8 @@ namespace DrugStore.Data.Mapping.Store
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             //Validations
-            builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Description).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Name).HasColumnType("varchar(50)").IsRequired();
+            builder.Property(x => x.Description).HasColumnType("varchar(100)").IsRequired();
 
             //Relations
             builder.ToTable("Category")

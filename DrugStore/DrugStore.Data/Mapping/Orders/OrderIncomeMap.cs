@@ -11,10 +11,9 @@ namespace DrugStore.Data.Mapping.Sales
     {        
         public void Configure(EntityTypeBuilder<OrderIncome> builder)
         {
-            // Validations
-            builder.Property(x => x.DateEntry).IsRequired();           
-            builder.Property(x => x.Total).IsRequired();
-            builder.Property(x => x.State).HasMaxLength(20);
+            // Validations                      
+            builder.Property(x => x.Total).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.State).HasColumnType("varchar(20)");
 
             //Relations
             builder.ToTable("OrderIncome")

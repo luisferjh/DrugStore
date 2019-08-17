@@ -32,13 +32,13 @@ namespace DrugStore.Web.Services.Sales
                 IdSale = s.IdSale,
                 IdUser = s.IdUser,
                 IdClient = s.IdClient,
-                ClientName = s.Client.Name + " " + s.Client.LastName,               
-                TypeSale = s.TypeSale,                
+                ClientName = s.Client.Name + " " + s.Client.LastName,
+                TypeSale = s.TypeSale,
                 VoucherSeries = s.VoucherSeries,
                 VoucherNumber = s.VoucherNumber,
-                SaleDate = s.SaleDate,
+                SaleDate = EF.Property<DateTime>(s, "DateOn"),
                 TotalPrice = s.TotalPrice,
-                State = s.State               
+                State = s.State
             });
         }
 
@@ -61,7 +61,7 @@ namespace DrugStore.Web.Services.Sales
                 TypeSale = sale.TypeSale,
                 VoucherSeries = sale.VoucherSeries,
                 VoucherNumber = sale.VoucherNumber,
-                SaleDate = sale.SaleDate,
+                //SaleDate = sale.SaleDate,
                 TotalPrice = sale.TotalPrice,
                 State = sale.State
             };
@@ -79,7 +79,7 @@ namespace DrugStore.Web.Services.Sales
                 TypeSale = saleModel.TypeSale,
                 VoucherSeries = saleModel.VoucherSeries,
                 VoucherNumber = saleModel.VoucherNumber,
-                SaleDate = dateOrderIncome,
+                //SaleDate = dateOrderIncome,
                 TotalPrice = saleModel.TotalPrice,
                 State = "Accepted"
             };
@@ -120,7 +120,7 @@ namespace DrugStore.Web.Services.Sales
             sale.TypeSale = saleModel.TypeSale;
             sale.VoucherSeries = saleModel.VoucherSeries;
             sale.VoucherNumber = saleModel.VoucherNumber;
-            sale.SaleDate = saleModel.SaleDate;
+            //sale.SaleDate = saleModel.SaleDate;
             sale.TotalPrice = saleModel.TotalPrice;
             sale.State = saleModel.State;
 

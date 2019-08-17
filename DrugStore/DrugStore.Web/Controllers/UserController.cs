@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DrugStore.Web.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
