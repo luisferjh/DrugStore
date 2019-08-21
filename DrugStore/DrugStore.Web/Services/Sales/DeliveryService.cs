@@ -19,15 +19,15 @@ namespace DrugStore.Web.Services.Sales
         }
         public async Task<IEnumerable<DeliveryViewModel>> List()
         {
-            var deliveries = await _context.Deliveries.ToListAsync();
-            return deliveries.Select(d => new DeliveryViewModel
+            return await _context.Deliveries
+            .Select(d => new DeliveryViewModel
             {
                 IdSale = d.IdSale,
                 IdClient = d.IdClient,
                 Adress = d.Adress,
-                //Date = d.Date,
+                Date = EF.Property<DateTime>(d, "DateOn"),
                 State = d.State
-            });
+            }).ToListAsync();
         }
         public async Task<DeliveryViewModel> GetDelivery(int id)
         {
@@ -42,7 +42,7 @@ namespace DrugStore.Web.Services.Sales
                 IdSale = delivery.IdSale,
                 IdClient = delivery.IdClient,
                 Adress = delivery.Adress,
-                //Date = delivery.Date,
+                Date = _context.Entry(delivery).Property<DateTime>("DateOn").CurrentValue,
                 State = delivery.State
             };
         }
@@ -53,8 +53,7 @@ namespace DrugStore.Web.Services.Sales
             {
                 IdSale = deliveryModel.IdSale,
                 IdClient = deliveryModel.IdClient,
-                Adress = deliveryModel.Adress,
-                //Date = deliveryModel.Date,
+                Adress = deliveryModel.Adress,                
                 State = deliveryModel.State
             };
 
@@ -69,8 +68,7 @@ namespace DrugStore.Web.Services.Sales
 
             delivery.IdSale = deliveryModel.IdSale;
             delivery.IdClient = deliveryModel.IdClient;
-            delivery.Adress = deliveryModel.Adress;
-            //delivery.Date = deliveryModel.Date;
+            delivery.Adress = deliveryModel.Adress;            
             delivery.State = deliveryModel.State;
 
             await _context.SaveChangesAsync();

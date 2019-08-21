@@ -18,15 +18,14 @@ namespace DrugStore.Web.Services.Store
         }
         public async Task<IEnumerable<LossesViewModel>> List()
         {
-            var losses = await _context.Losses.ToListAsync();
-
-            return losses.Select(l => new LossesViewModel
+            return await _context.Losses
+            .Select(l => new LossesViewModel
             {
                 IdLosses = l.IdLosses,
-                //DateLoss = l.DateLoss,
+                DateLoss = EF.Property<DateTime>(l,"DateOn"),
                 Cause = l.Cause,
                 State = l.State
-            });
+            }).ToListAsync();
         }
 
         public async Task<LossesViewModel> GetLoss(int id)
@@ -40,7 +39,7 @@ namespace DrugStore.Web.Services.Store
             return new LossesViewModel
             {
                 IdLosses = loss.IdLosses,
-                //DateLoss = loss.DateLoss,
+                DateLoss = _context.Entry(loss).Property<DateTime>("DateOn").CurrentValue,
                 Cause = loss.Cause,
                 State = loss.State
             };
@@ -49,8 +48,7 @@ namespace DrugStore.Web.Services.Store
         public async Task AddLoss(CreateViewModel lossModel)
         {
             Losses losses = new Losses
-            {
-                //DateLoss = lossModel.DateLoss,
+            {                
                 Cause = lossModel.Cause,
                 State = lossModel.State
             };
@@ -64,8 +62,7 @@ namespace DrugStore.Web.Services.Store
         {
             var loss = await _context.Losses.FirstOrDefaultAsync(l =>
             l.IdLosses == lossModel.IdLosses);
-
-            //loss.DateLoss = lossModel.DateLoss;
+            
             loss.Cause = lossModel.Cause;
             loss.State = lossModel.State;
 

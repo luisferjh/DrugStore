@@ -11,8 +11,7 @@ namespace DrugStore.Web.Models.Sales.Sale
         public int? IdClient { get; set; }
         public string TypeSale { get; set; }
         public string VoucherSeries { get; set; }
-        public string VoucherNumber { get; set; }
-        public DateTime SaleDate { get; set; }
+        public string VoucherNumber { get; set; }       
         public decimal TotalPrice { get; set; }
         public string State { get; set; }
        

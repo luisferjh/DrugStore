@@ -9,8 +9,7 @@ namespace DrugStore.Web.Models.Orders.Order
     {
         public int IdOrderIncome { get; set; }
         public int IdProvider { get; set; }
-        public int IdUser { get; set; }
-        public DateTime DateEntry { get; set; }
+        public int IdUser { get; set; }       
         public int Amount { get; set; }
         public DateTime DueDate { get; set; }
         public decimal Total { get; set; }

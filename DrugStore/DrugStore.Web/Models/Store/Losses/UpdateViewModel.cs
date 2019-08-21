@@ -7,8 +7,7 @@ namespace DrugStore.Web.Models.Store.Losses
 {
     public class UpdateViewModel
     {
-        public int IdLosses { get; set; }
-        public DateTime DateLoss { get; set; }
+        public int IdLosses { get; set; }       
         public string Cause { get; set; }
         public string State { get; set; }      
     }

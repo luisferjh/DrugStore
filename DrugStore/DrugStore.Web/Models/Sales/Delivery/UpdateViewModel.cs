@@ -9,8 +9,7 @@ namespace DrugStore.Web.Models.Sales.Delivery
     {
         public int IdSale { get; set; }
         public int IdClient { get; set; }
-        public string Adress { get; set; }
-        public DateTime Date { get; set; }
+        public string Adress { get; set; }       
         public string State { get; set; }
     }
 }

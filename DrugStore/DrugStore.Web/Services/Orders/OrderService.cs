@@ -20,24 +20,24 @@ namespace DrugStore.Web.Services.Orders
 
         public async Task<IEnumerable<OrderViewModel>> List()
         {
-            var orders = await _context.OrderIncomes
+            return await _context.OrderIncomes
                 .Include(u => u.User)
                 .Include(c => c.Provider)
                 .OrderByDescending(i => i.IdOrderIncome)
                 .Take(100)
-                .ToListAsync();
+                .Select(o => new OrderViewModel
+                {
+                    IdOrderIncome = o.IdOrderIncome,
+                    IdProvider = o.IdProvider,
+                    Proveedor = o.Provider.ProviderName,
+                    IdUser = o.IdUser,
+                    User = o.User.UserName,
+                    DateEntry = EF.Property<DateTime>(o,"DateOn"),                  
+                    Total = o.Total,
+                    State = o.State
+                }).ToListAsync();
 
-            return orders.Select(o => new OrderViewModel
-            {
-               IdOrderIncome = o.IdOrderIncome,
-               IdProvider = o.IdProvider,
-               Proveedor = o.Provider.ProviderName,
-               IdUser = o.IdUser,
-               User = o.User.UserName,
-               //DateEntry = o.DateEntry,                  
-               Total = o.Total,
-               State = o.State
-            });
+
         }
 
         public async Task<OrderViewModel> GetOrderIncome(int id)
@@ -54,8 +54,8 @@ namespace DrugStore.Web.Services.Orders
                 IdProvider = order.IdProvider,
                 Proveedor = order.Provider.ProviderName,
                 IdUser = order.IdUser,
-                User = order.User.UserName,
-                //DateEntry = order.DateEntry,                
+                User = order.User.UserName,                
+                DateEntry =  _context.Entry(order).Property<DateTime>("DateOn").CurrentValue,                
                 Total = order.Total,
                 State = order.State
             };
@@ -69,8 +69,7 @@ namespace DrugStore.Web.Services.Orders
             OrderIncome order = new OrderIncome
             {               
                 IdProvider = orderModel.IdProvider,
-                IdUser = orderModel.IdUser,
-                //DateEntry = dateOrderIncome,                
+                IdUser = orderModel.IdUser,                              
                 Total = orderModel.Total,
                 State = "Accept"
             };
@@ -106,8 +105,7 @@ namespace DrugStore.Web.Services.Orders
 
             order.IdOrderIncome = orderModel.IdOrderIncome;
             order.IdProvider = orderModel.IdProvider;
-            order.IdUser = orderModel.IdUser;
-            //order.DateEntry = orderModel.DateEntry;           
+            order.IdUser = orderModel.IdUser;                      
             order.Total = orderModel.Total;
             order.State = orderModel.State;
 

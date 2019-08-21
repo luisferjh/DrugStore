@@ -104,8 +104,9 @@
 </template>
 
 <script>
+
 export default {
-  name: 'navigationDrawer',
+  name: 'AppNavigation',
   data() {
     return {
       drawer: null,

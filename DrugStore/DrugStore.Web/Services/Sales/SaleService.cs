@@ -20,26 +20,25 @@ namespace DrugStore.Web.Services.Sales
 
         public async Task<IEnumerable<SaleViewModel>> List()
         {
-            var sales = await _context.Sales
+            return await _context.Sales
                 .Include(u => u.IdUser)
                 .Include(c => c.IdClient)
                 .OrderByDescending(v => v.IdSale)
                 .Take(100)
-                .ToListAsync();
+                .Select(s => new SaleViewModel
+                {
+                    IdSale = s.IdSale,
+                    IdUser = s.IdUser,
+                    IdClient = s.IdClient,
+                    ClientName = s.Client.Name + " " + s.Client.LastName,
+                    TypeSale = s.TypeSale,
+                    VoucherSeries = s.VoucherSeries,
+                    VoucherNumber = s.VoucherNumber,
+                    SaleDate = EF.Property<DateTime>(s, "DateOn"),
+                    TotalPrice = s.TotalPrice,
+                    State = s.State
+                }).ToListAsync(); 
 
-            return sales.Select(s => new SaleViewModel
-            {
-                IdSale = s.IdSale,
-                IdUser = s.IdUser,
-                IdClient = s.IdClient,
-                ClientName = s.Client.Name + " " + s.Client.LastName,
-                TypeSale = s.TypeSale,
-                VoucherSeries = s.VoucherSeries,
-                VoucherNumber = s.VoucherNumber,
-                SaleDate = EF.Property<DateTime>(s, "DateOn"),
-                TotalPrice = s.TotalPrice,
-                State = s.State
-            });
         }
 
         public async Task<SaleViewModel> GetSale(int id)
@@ -61,7 +60,7 @@ namespace DrugStore.Web.Services.Sales
                 TypeSale = sale.TypeSale,
                 VoucherSeries = sale.VoucherSeries,
                 VoucherNumber = sale.VoucherNumber,
-                SaleDate = EF.Property<DateTime>(sale, "DateOn"),
+                SaleDate = _context.Entry(sale).Property<DateTime>("DateOn").CurrentValue,
                 TotalPrice = sale.TotalPrice,
                 State = sale.State
             };
@@ -78,8 +77,7 @@ namespace DrugStore.Web.Services.Sales
                 IdClient = saleModel.IdClient,
                 TypeSale = saleModel.TypeSale,
                 VoucherSeries = saleModel.VoucherSeries,
-                VoucherNumber = saleModel.VoucherNumber,
-                //SaleDate = dateOrderIncome,
+                VoucherNumber = saleModel.VoucherNumber,                
                 TotalPrice = saleModel.TotalPrice,
                 State = "Accepted"
             };
@@ -119,8 +117,7 @@ namespace DrugStore.Web.Services.Sales
             sale.IdClient = saleModel.IdClient;
             sale.TypeSale = saleModel.TypeSale;
             sale.VoucherSeries = saleModel.VoucherSeries;
-            sale.VoucherNumber = saleModel.VoucherNumber;
-            //sale.SaleDate = saleModel.SaleDate;
+            sale.VoucherNumber = saleModel.VoucherNumber;            
             sale.TotalPrice = saleModel.TotalPrice;
             sale.State = saleModel.State;
 

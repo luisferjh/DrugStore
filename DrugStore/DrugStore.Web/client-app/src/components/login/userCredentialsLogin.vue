@@ -23,10 +23,12 @@
               >
               </v-text-field>   
             </v-form>  
-            <div class="text-xs-center">
-              <v-btn align-center dark color="teal lighten-1"  @click="submit()"> Log in</v-btn> 
-              <v-btn align-center dark color="teal lighten-1"  @click=""> Sign in</v-btn>                   
-            </div>                    
+            <div>
+              <v-btn block align-center dark color="teal lighten-1"  @click="submit()"> Log in</v-btn>                               
+            </div>   
+            <div class="text-center mt-4">
+              <router-link to="/">¿Se te olvidó tu contraseña? </router-link>
+            </div>                 
           </v-card-text>
         </v-card>
       </v-flex>
@@ -45,6 +47,9 @@
   
   export default {
     name:'userCredentialsLogin',
+    components: {
+      ProgressBar,
+    },
     data() {
       return {
         showProgressBar:false,
@@ -56,7 +61,7 @@
       submit() {
         this.showProgressBar = true
         let me = this;       
-        axios.post('https://localhost:44397/api/login',{											
+        axios.post('https://localhost:44313/api/login',{											
 					Email:me.email,
 					Password: me.password					
         })
@@ -76,4 +81,11 @@
     
   }
 </script>
+
+
+<style>
+  .router-link-exact-active{
+   background: #eee;
+  }
+</style>
 

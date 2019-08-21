@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name:'progressBar'
+    name:'ProgressBar'
   }
 </script>
 
