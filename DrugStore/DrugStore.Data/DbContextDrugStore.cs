@@ -42,8 +42,11 @@ namespace DrugStore.Data
                 if (entityType.ClrType.GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
                     modelBuilder.Entity(entityType.Name).Property<DateTime>("DateOn");
+                    modelBuilder.Entity(entityType.Name).Property<DateTime>("LastUpdated");
                 }
             }
+
+            modelBuilder.Entity<User>().Property<DateTime>("DateOn");
 
             base.OnModelCreating(modelBuilder);            
             modelBuilder.ApplyConfiguration(new CategoryMap());
@@ -68,10 +71,12 @@ namespace DrugStore.Data
             var timestamp = DateTime.Now;
 
             foreach (var entry in ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added))
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
             {
                 if (entry.Entity.GetType().GetCustomAttributes(typeof(AuditableAttribute), true).Length > 0)
                 {
+                    entry.Property("LastUpdated").CurrentValue = timestamp;
+
                     if (entry.State == EntityState.Added)
                     {
                         entry.Property("DateOn").CurrentValue = timestamp;

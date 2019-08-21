@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace DrugStore.Entities.Users
-{
-    [Auditable]
+{    
     public class User
     {
         public int IdUser { get; set; }
