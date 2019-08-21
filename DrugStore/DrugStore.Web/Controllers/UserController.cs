@@ -103,14 +103,14 @@ namespace DrugStore.Web.Controllers
 
         // POST: api/User
         [HttpPost("[action]")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            
             try
             {
                 await _userService.AddUser(model);

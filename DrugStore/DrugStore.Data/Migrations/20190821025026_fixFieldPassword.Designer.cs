@@ -4,14 +4,16 @@ using DrugStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DrugStore.Data.Migrations
 {
     [DbContext(typeof(DbContextDrugStore))]
-    partial class DbContextDrugStoreModelSnapshot : ModelSnapshot
+    [Migration("20190821025026_fixFieldPassword")]
+    partial class fixFieldPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

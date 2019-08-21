@@ -61,7 +61,7 @@ namespace DrugStore.Web.Services.Sales
                 TypeSale = sale.TypeSale,
                 VoucherSeries = sale.VoucherSeries,
                 VoucherNumber = sale.VoucherNumber,
-                //SaleDate = sale.SaleDate,
+                SaleDate = EF.Property<DateTime>(sale, "DateOn"),
                 TotalPrice = sale.TotalPrice,
                 State = sale.State
             };

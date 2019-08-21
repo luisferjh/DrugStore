@@ -41,7 +41,7 @@
 
 <script>
   import axios from 'axios'
-  import ProgressBar from '@/components/ProgressBar'
+  import ProgressBar from '@/components/login/ProgressBar'
   
   export default {
     name:'userCredentialsLogin',

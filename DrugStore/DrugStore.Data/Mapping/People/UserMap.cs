@@ -19,8 +19,8 @@ namespace DrugStore.Data.Mapping.People
             builder.Property(x => x.Address).HasColumnType("varchar(70)");
             builder.Property(x => x.PhoneNumber).HasColumnType("varchar(20)").IsRequired();
             builder.Property(x => x.Email).HasColumnType("varchar(70)").IsRequired();
-            builder.Property(x => x.PasswordHash).HasMaxLength(64).IsRequired();
-            builder.Property(x => x.PasswordSalt).HasMaxLength(64).IsRequired();
+            builder.Property(x => x.PasswordHash).HasMaxLength(250).IsRequired();
+            builder.Property(x => x.PasswordSalt).HasMaxLength(250).IsRequired();
             builder.Property(x => x.Condition).IsRequired();
 
             //Relations

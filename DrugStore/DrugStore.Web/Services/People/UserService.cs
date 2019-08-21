@@ -27,25 +27,44 @@ namespace DrugStore.Web.Services.People
         }
 
         public async Task<IEnumerable<UserViewModel>> List()
-        {
-            var users = await _context.Users.ToListAsync();
-            return users.Select(c => new UserViewModel
-            {
-                IdUser = c.IdUser,
-                IdRole = c.IdRole,
-                UserName = c.UserName,               
-                DocumentType = c.DocumentType,
-                DocumentNumber = c.DocumentNumber,
-                Address = c.Address,
-                PhoneNumber = c.PhoneNumber,
-                Email = c.Email,             
-                Condition = c.Condition,
-            });
+        {            
+            return await _context.Users
+                .Select(c => new UserViewModel
+                {
+                    IdUser = c.IdUser,
+                    IdRole = c.IdRole,
+                    UserName = c.UserName,
+                    DocumentType = c.DocumentType,
+                    DocumentNumber = c.DocumentNumber,
+                    Address = c.Address,
+                    PhoneNumber = c.PhoneNumber,
+                    CreatedDate = EF.Property<DateTime>(c, "DateOn"),                
+                    Email = c.Email,
+                    Condition = c.Condition,
+             }).ToListAsync();
         }
 
-        public Task<UserViewModel> GetUser(int id)
+        public async Task<UserViewModel> GetUser(int id)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserViewModel
+            {
+                IdUser = user.IdUser,
+                IdRole = user.IdRole,
+                UserName = user.UserName,
+                DocumentType = user.DocumentType,
+                DocumentNumber = user.DocumentNumber,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+                CreatedDate = _context.Entry(user).Property<DateTime>("DateOn").CurrentValue,
+                Email = user.Email,
+                Condition = user.Condition,
+            };
         }
      
         public async Task AddUser(CreateViewModel UserModel)
@@ -68,7 +87,7 @@ namespace DrugStore.Web.Services.People
 
             await _context.Users.AddAsync(user);
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
          
 

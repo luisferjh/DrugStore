@@ -13,6 +13,7 @@ namespace DrugStore.Web.Services.People
         Task<UserViewModel> GetUser(int id);
         Task<UserLoginViewModel> Login(LoginViewModel model);
         Task AddUser(CreateViewModel UserModel);
+        //void AddUser(CreateViewModel UserModel);
         void CreatePassword(string password, out byte[] passwordHash, out byte[] passwordSalt);
         bool CheckPassword(string password, byte[] passwordHashStored, byte[] passwordSaltStored);
         string GenerateToken(UserLoginViewModel user);
