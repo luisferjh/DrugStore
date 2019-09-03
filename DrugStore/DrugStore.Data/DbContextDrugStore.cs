@@ -63,6 +63,235 @@ namespace DrugStore.Data
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new ProviderMap());
+
+            //initialize data
+            modelBuilder.Entity<Category>().HasData(
+                new Category() {IdCategory = 1, Name = "Generico", Description = "productos de caracter generico", Condition = true },
+                new Category() {IdCategory = 2, Name = "Comercial", Description = "productos de caracter comercial", Condition = true });
+            
+            //Laboratory
+            modelBuilder.Entity<Laboratory>().HasData(
+                new Laboratory
+                {
+                    IdLaboratory = 1,
+                    LaboratoryName = "Bayer",
+                    Description = "Bayer es una compañía de innovación que investiga" +
+                                      " en las áreas de Ciencias de la Vida centradas en la " +
+                                      "salud y la agricultura.",
+                    Condition = true
+                },
+                new Laboratory
+                {
+                    IdLaboratory = 2,
+                    LaboratoryName = "Tecnoquimicas",
+                    Description = "Somos un grupo empresarial colombiano de reconocido liderazgo en la " +
+                                    "industria farmacéutica y de consumo masivo, comprometido desde hace más " +
+                                    "de 80 años con el crecimiento económico y el avance social de nuestro país",
+                    Condition = true
+                },
+                new Laboratory
+                {
+                    IdLaboratory = 3,
+                    LaboratoryName = "Genfar",
+                    Description = "Genfar es una empresa que creció con el compromiso de fabricar y llevar " +
+                                    "medicamentos de calidad a cada vez más personas",
+                    Condition = true
+                },
+                new Laboratory
+                {
+                    IdLaboratory = 4,
+                    LaboratoryName = "Sanofi",
+                    Description = "ofrecemos soluciones de salud innovadoras en una amplia gama de afecciones " +
+                                    "de salud: ya sea una afección común como un resfriado, alergias, problemas " +
+                                    "digestivos o afecciones graves tales como el cáncer o la esclerosis múltiple",
+                    Condition = true
+                });
+
+            //Product
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    IdProduct = 1,
+                    IdCategory = 1,
+                    IdLaboratory = 2,
+                    ProductName = "Acetaminofen",
+                    BarCode = "sdfsdf",
+                    Indicative = "tabletas, 3 al dia",
+                    Stock = 100,
+                    Price = 1000,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 2,
+                    IdCategory = 1,
+                    IdLaboratory = 1,
+                    ProductName = "Trimebutina",
+                    BarCode = "sdfsdf",
+                    Indicative = "tabletas",
+                    Stock = 10,
+                    Price = 4000,
+                    Condition = true
+                }, 
+                new Product
+                {
+                    IdProduct = 3,
+                    IdCategory = 2,
+                    IdLaboratory = 4,
+                    ProductName = "Dolex",
+                    BarCode = "",
+                    Indicative = "Liquido",
+                    Stock = 10,
+                    Price = 5000,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 4,
+                    IdCategory = 2,
+                    IdLaboratory = 4,
+                    ProductName = "Dolex",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 45,
+                    Price = 3000,
+                    Condition = true
+                }, 
+                new Product
+                {
+                    IdProduct = 5,
+                    IdCategory = 1,
+                    IdLaboratory = 1,
+                    ProductName = "Albendazol",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 15,
+                    Price = 2500,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 6,
+                    IdCategory = 2,
+                    IdLaboratory = 2,
+                    ProductName = "Velgolax",
+                    BarCode = "",
+                    Indicative = "Polvo",
+                    Stock = 5,
+                    Price = 6000,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 7,
+                    IdCategory = 2,
+                    IdLaboratory = 3,
+                    ProductName = "Pirantel",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 12,
+                    Price = 3000,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 8,
+                    IdCategory = 1,
+                    IdLaboratory = 4,
+                    ProductName = "Naproxeno",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 25,
+                    Price = 1500,
+                    Condition = true
+                }, 
+                new Product
+                {
+                    IdProduct = 9,
+                    IdCategory = 1,
+                    IdLaboratory = 3,
+                    ProductName = "Betametasona",
+                    BarCode = "",
+                    Indicative = "Ampolla",
+                    Stock = 10,
+                    Price = 1750,
+                    Condition = true
+                }, 
+                new Product
+                {
+                    IdProduct = 10,
+                    IdCategory = 2,
+                    IdLaboratory = 4,
+                    ProductName = "Advil Max",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 10,
+                    Price = 1800,
+                    Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 11,
+                    IdCategory = 2,
+                    IdLaboratory = 1,
+                    ProductName = "Descongel",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 10,
+                    Price = 1300,
+                    Condition = true
+                });
+
+            //Provider
+            modelBuilder.Entity<Provider>().HasData(
+                new Provider
+                {
+                    IdProvider = 1,
+                    ProviderName = "Copydroga",
+                    PhoneNumber = "3005007070"
+                }, 
+                new Provider
+                {
+                    IdProvider = 2,
+                    ProviderName = "DyDMendicamentos",
+                    PhoneNumber = "32253457070"
+                },
+                new Provider
+                {
+                    IdProvider = 3,
+                    ProviderName = "Distribuciones pastor julio",
+                    PhoneNumber = "3005006670"
+                },
+                new Provider
+                {
+                    IdProvider = 4,
+                    ProviderName = "Distribuciones La Fe",
+                    PhoneNumber = "3015237070"
+                });
+
+            // Client
+            modelBuilder.Entity<Client>().HasData(
+                new Client
+                {
+                    IdClient = 1,
+                    Name = "Juan",
+                    LastName = "Mendoza",
+                    DocumentType = "CC",
+                    DocumentNumber = "1065789741",
+                    PhoneNumber = "3005698741",
+                    Condition = true                    
+                }, 
+                new Client
+                {
+                    IdClient = 2,
+                    Name = "Andres",
+                    LastName = "Quintero",
+                    DocumentType = "CC",
+                    DocumentNumber = "1065852654",
+                    PhoneNumber = "3011235689",
+                    Condition = true
+                });
+                             
         }
 
         public override int SaveChanges()

@@ -8,12 +8,13 @@
     <template v-slot:prepend>
       <v-list-item two-line>
         <v-list-item-avatar>
-          <img src="https://randomuser.me/api/portraits/women/81.jpg" alt="user">
+          <!-- <img src="" alt="user"> -->
+          <v-icon>account_circle</v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Jane Smith</v-list-item-title>
-          <v-list-item-subtitle>Admin</v-list-item-subtitle>
+          <v-list-item-title>{{profile.name}}</v-list-item-title>
+          <v-list-item-subtitle>{{profile.role}}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </template>
@@ -30,8 +31,7 @@
         </v-list-item>
    
       <v-list-group
-        prepend-icon="dashboard"              
-       
+        prepend-icon="dashboard"                     
       >
         <template v-slot:activator>         
             <v-list-item-content>
@@ -104,13 +104,35 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   name: 'AppNavigation',
   data() {
     return {
       drawer: null,
-      model:true
+      model:true,
+      profile:[]
+    }
+  },
+  created () {
+    this.fetchProfile()
+  },
+  methods: {
+    fetchProfile() {
+      let me=this;                    
+      // let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+      // let headers = {headers:AuthorizationHeader}
+      axios.get('https://localhost:44313/api/user/getProfile/26')
+        .then(function (response) {
+        // handle success
+        me.profile = response.data 
+        console.log(me.profile)                                  
+        })
+      .catch(function (error) {
+        // handle error          
+        console.log(error);         
+      })
     }
   },
 };

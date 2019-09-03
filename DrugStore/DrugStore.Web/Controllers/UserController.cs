@@ -31,11 +31,25 @@ namespace DrugStore.Web.Controllers
             return users;
         }
 
-        // GET: api/User/5
+        // GET: api/User/Get/5
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var user = await _userService.GetUser(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        // GET: api/User/GetProfile/5
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetProfile([FromRoute] int id)
+        {
+            var user = await _userService.UserProfileNav(id);
 
             if (user == null)
             {

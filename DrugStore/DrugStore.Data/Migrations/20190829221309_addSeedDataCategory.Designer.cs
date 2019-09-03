@@ -4,14 +4,16 @@ using DrugStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DrugStore.Data.Migrations
 {
     [DbContext(typeof(DbContextDrugStore))]
-    partial class DbContextDrugStoreModelSnapshot : ModelSnapshot
+    [Migration("20190829221309_addSeedDataCategory")]
+    partial class addSeedDataCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +220,7 @@ namespace DrugStore.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("LaboratoryName")
                         .IsRequired()
@@ -227,36 +229,6 @@ namespace DrugStore.Data.Migrations
                     b.HasKey("IdLaboratory");
 
                     b.ToTable("Laboratory");
-
-                    b.HasData(
-                        new
-                        {
-                            IdLaboratory = 1,
-                            Condition = true,
-                            Description = "Bayer es una compañía de innovación que investiga en las áreas de Ciencias de la Vida centradas en la salud y la agricultura.",
-                            LaboratoryName = "Bayer"
-                        },
-                        new
-                        {
-                            IdLaboratory = 2,
-                            Condition = true,
-                            Description = "Somos un grupo empresarial colombiano de reconocido liderazgo en la industria farmacéutica y de consumo masivo, comprometido desde hace más de 80 años con el crecimiento económico y el avance social de nuestro país",
-                            LaboratoryName = "Tecnoquimicas"
-                        },
-                        new
-                        {
-                            IdLaboratory = 3,
-                            Condition = true,
-                            Description = "Genfar es una empresa que creció con el compromiso de fabricar y llevar medicamentos de calidad a cada vez más personas",
-                            LaboratoryName = "Genfar"
-                        },
-                        new
-                        {
-                            IdLaboratory = 4,
-                            Condition = true,
-                            Description = "ofrecemos soluciones de salud innovadoras en una amplia gama de afecciones de salud: ya sea una afección común como un resfriado, alergias, problemas digestivos o afecciones graves tales como el cáncer o la esclerosis múltiple",
-                            LaboratoryName = "Sanofi"
-                        });
                 });
 
             modelBuilder.Entity("DrugStore.Entities.Store.LossDetail", b =>
@@ -340,140 +312,6 @@ namespace DrugStore.Data.Migrations
                     b.HasIndex("IdLaboratory");
 
                     b.ToTable("Product");
-
-                    b.HasData(
-                        new
-                        {
-                            IdProduct = 1,
-                            BarCode = "sdfsdf",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 2,
-                            Indicative = "tabletas, 3 al dia",
-                            Price = 1000m,
-                            ProductName = "Acetaminofen",
-                            Stock = 100
-                        },
-                        new
-                        {
-                            IdProduct = 2,
-                            BarCode = "sdfsdf",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 1,
-                            Indicative = "tabletas",
-                            Price = 4000m,
-                            ProductName = "Trimebutina",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 3,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 4,
-                            Indicative = "Liquido",
-                            Price = 5000m,
-                            ProductName = "Dolex",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 4,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 3000m,
-                            ProductName = "Dolex",
-                            Stock = 45
-                        },
-                        new
-                        {
-                            IdProduct = 5,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 1,
-                            Indicative = "Tableta",
-                            Price = 2500m,
-                            ProductName = "Albendazol",
-                            Stock = 15
-                        },
-                        new
-                        {
-                            IdProduct = 6,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 2,
-                            Indicative = "Polvo",
-                            Price = 6000m,
-                            ProductName = "Velgolax",
-                            Stock = 5
-                        },
-                        new
-                        {
-                            IdProduct = 7,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 3,
-                            Indicative = "Tableta",
-                            Price = 3000m,
-                            ProductName = "Pirantel",
-                            Stock = 12
-                        },
-                        new
-                        {
-                            IdProduct = 8,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 1500m,
-                            ProductName = "Naproxeno",
-                            Stock = 25
-                        },
-                        new
-                        {
-                            IdProduct = 9,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 3,
-                            Indicative = "Ampolla",
-                            Price = 1750m,
-                            ProductName = "Betametasona",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 10,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 1800m,
-                            ProductName = "Advil Max",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 11,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 1,
-                            Indicative = "Tableta",
-                            Price = 1300m,
-                            ProductName = "Descongel",
-                            Stock = 10
-                        });
                 });
 
             modelBuilder.Entity("DrugStore.Entities.Users.Client", b =>
@@ -485,6 +323,8 @@ namespace DrugStore.Data.Migrations
                     b.Property<bool>("Condition");
 
                     b.Property<string>("DocumentNumber")
+                        .IsRequired()
+                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 64)))
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("DocumentType")
@@ -504,28 +344,6 @@ namespace DrugStore.Data.Migrations
                     b.HasKey("IdClient");
 
                     b.ToTable("Client");
-
-                    b.HasData(
-                        new
-                        {
-                            IdClient = 1,
-                            Condition = true,
-                            DocumentNumber = "1065789741",
-                            DocumentType = "CC",
-                            LastName = "Mendoza",
-                            Name = "Juan",
-                            PhoneNumber = "3005698741"
-                        },
-                        new
-                        {
-                            IdClient = 2,
-                            Condition = true,
-                            DocumentNumber = "1065852654",
-                            DocumentType = "CC",
-                            LastName = "Quintero",
-                            Name = "Andres",
-                            PhoneNumber = "3011235689"
-                        });
                 });
 
             modelBuilder.Entity("DrugStore.Entities.Users.Provider", b =>
@@ -553,32 +371,6 @@ namespace DrugStore.Data.Migrations
                     b.HasKey("IdProvider");
 
                     b.ToTable("Provider");
-
-                    b.HasData(
-                        new
-                        {
-                            IdProvider = 1,
-                            PhoneNumber = "3005007070",
-                            ProviderName = "Copydroga"
-                        },
-                        new
-                        {
-                            IdProvider = 2,
-                            PhoneNumber = "32253457070",
-                            ProviderName = "DyDMendicamentos"
-                        },
-                        new
-                        {
-                            IdProvider = 3,
-                            PhoneNumber = "3005006670",
-                            ProviderName = "Distribuciones pastor julio"
-                        },
-                        new
-                        {
-                            IdProvider = 4,
-                            PhoneNumber = "3015237070",
-                            ProviderName = "Distribuciones La Fe"
-                        });
                 });
 
             modelBuilder.Entity("DrugStore.Entities.Users.Role", b =>

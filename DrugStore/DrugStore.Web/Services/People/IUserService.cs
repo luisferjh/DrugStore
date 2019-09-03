@@ -11,6 +11,7 @@ namespace DrugStore.Web.Services.People
     {
         Task<IEnumerable<UserViewModel>> List();
         Task<UserViewModel> GetUser(int id);
+        Task<UserProfileViewModel> UserProfileNav(int id);
         Task<UserLoginViewModel> Login(LoginViewModel model);
         Task AddUser(CreateViewModel UserModel);
         //void AddUser(CreateViewModel UserModel);

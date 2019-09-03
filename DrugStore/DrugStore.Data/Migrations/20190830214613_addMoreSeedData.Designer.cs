@@ -4,14 +4,16 @@ using DrugStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DrugStore.Data.Migrations
 {
     [DbContext(typeof(DbContextDrugStore))]
-    partial class DbContextDrugStoreModelSnapshot : ModelSnapshot
+    [Migration("20190830214613_addMoreSeedData")]
+    partial class addMoreSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -385,93 +387,9 @@ namespace DrugStore.Data.Migrations
                             Condition = true,
                             IdCategory = 2,
                             IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 3000m,
+                            Indicative = "Liquido",
+                            Price = 5000m,
                             ProductName = "Dolex",
-                            Stock = 45
-                        },
-                        new
-                        {
-                            IdProduct = 5,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 1,
-                            Indicative = "Tableta",
-                            Price = 2500m,
-                            ProductName = "Albendazol",
-                            Stock = 15
-                        },
-                        new
-                        {
-                            IdProduct = 6,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 2,
-                            Indicative = "Polvo",
-                            Price = 6000m,
-                            ProductName = "Velgolax",
-                            Stock = 5
-                        },
-                        new
-                        {
-                            IdProduct = 7,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 3,
-                            Indicative = "Tableta",
-                            Price = 3000m,
-                            ProductName = "Pirantel",
-                            Stock = 12
-                        },
-                        new
-                        {
-                            IdProduct = 8,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 1500m,
-                            ProductName = "Naproxeno",
-                            Stock = 25
-                        },
-                        new
-                        {
-                            IdProduct = 9,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 1,
-                            IdLaboratory = 3,
-                            Indicative = "Ampolla",
-                            Price = 1750m,
-                            ProductName = "Betametasona",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 10,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 4,
-                            Indicative = "Tableta",
-                            Price = 1800m,
-                            ProductName = "Advil Max",
-                            Stock = 10
-                        },
-                        new
-                        {
-                            IdProduct = 11,
-                            BarCode = "",
-                            Condition = true,
-                            IdCategory = 2,
-                            IdLaboratory = 1,
-                            Indicative = "Tableta",
-                            Price = 1300m,
-                            ProductName = "Descongel",
                             Stock = 10
                         });
                 });

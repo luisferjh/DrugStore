@@ -66,7 +66,25 @@ namespace DrugStore.Web.Services.People
                 Condition = user.Condition,
             };
         }
-     
+
+        public async Task<UserProfileViewModel> UserProfileNav(int id)
+        {
+            var user = await _context.Users.
+                Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.IdUser == id);
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserProfileViewModel
+            {
+                IdUser = user.IdUser,
+                Name = user.UserName,                
+                Role = user.Role.RoleName
+            };
+        }
+
         public async Task AddUser(CreateViewModel UserModel)
         {
             CreatePassword(UserModel.Password, out byte[] PasswordHash, out byte[] PasswordSalt);
@@ -133,7 +151,7 @@ namespace DrugStore.Web.Services.People
               _config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(2),
+              expires: DateTime.Now.AddMinutes(5),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

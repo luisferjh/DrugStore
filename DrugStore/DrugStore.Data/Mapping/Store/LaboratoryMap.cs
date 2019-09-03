@@ -13,7 +13,7 @@ namespace DrugStore.Data.Mapping.Store
         {
             //Validations
             builder.Property(x => x.LaboratoryName).HasColumnType("varchar(50)").IsRequired();
-            builder.Property(x => x.Description).HasColumnType("varchar(100)").IsRequired();
+            builder.Property(x => x.Description).HasColumnType("varchar(250)").IsRequired();
 
             //Relations
             builder.ToTable("Laboratory")
