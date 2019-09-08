@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20190830212743_addMoreSeedData.Designer.cs" />
     <Compile Remove="Migrations\20190830214111_addMoreSeedData.cs" />
     <Compile Remove="Migrations\20190830214111_addMoreSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20190907145722_moreDataSeed.cs" />
+    <Compile Remove="Migrations\20190907145722_moreDataSeed.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

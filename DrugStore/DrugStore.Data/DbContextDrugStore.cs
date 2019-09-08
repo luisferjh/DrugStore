@@ -167,7 +167,7 @@ namespace DrugStore.Data
                     Indicative = "Tableta",
                     Stock = 15,
                     Price = 2500,
-                    Condition = true
+                    Condition = false
                 },
                 new Product
                 {
@@ -240,7 +240,32 @@ namespace DrugStore.Data
                     Stock = 10,
                     Price = 1300,
                     Condition = true
+                },
+                new Product
+                {
+                    IdProduct = 12,
+                    IdCategory = 2,
+                    IdLaboratory = 1,
+                    ProductName = "Buscapina",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 0,
+                    Price = 2300,
+                    Condition = false
+                },                
+                new Product
+                {
+                    IdProduct = 13,
+                    IdCategory = 1,
+                    IdLaboratory = 2,
+                    ProductName = "Ampicilina",
+                    BarCode = "",
+                    Indicative = "Tableta",
+                    Stock = 5,
+                    Price = 700,
+                    Condition = true
                 });
+
 
             //Provider
             modelBuilder.Entity<Provider>().HasData(

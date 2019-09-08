@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Product from './views/Product.vue'
 import Login from './views/Login.vue'
+import About from './views/about.vue'
 import store from './store'
 
 Vue.use(Router);
@@ -27,6 +28,14 @@ var router = new Router({
         admin:true,
         seller:true
       }
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About,
+      meta:{
+        free:true
+      }     
     },
     {
       path: '/login',

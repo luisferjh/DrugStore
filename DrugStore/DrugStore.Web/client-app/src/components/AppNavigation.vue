@@ -20,15 +20,15 @@
     </template>
     <v-divider></v-divider>
 
-     <v-list dense>
-        <v-list-item :to="{name:'home'}">
-          <v-list-item-icon>
-            <v-icon>home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Inicio</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+    <v-list dense>
+      <v-list-item :to="{name:'home'}" exact>
+        <v-list-item-icon>
+          <v-icon>home</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>Inicio</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
    
       <v-list-group
         prepend-icon="dashboard"                     
@@ -53,7 +53,7 @@
                   
       </v-list-group>
 
-        <v-list-item :to="{name:'about'}">
+        <v-list-item :to="{name:'about'}" exact>
           <v-list-item-icon>
             <v-icon>shopping_cart</v-icon>
           </v-list-item-icon>
@@ -89,7 +89,7 @@
         </v-list-item>
       </v-list-group>
 
-      </v-list>
+    </v-list>
     </v-navigation-drawer>
       <v-app-bar 
       :clipped-left="$vuetify.breakpoint.smAndUp"

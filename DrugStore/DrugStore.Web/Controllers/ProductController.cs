@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
-    //[Authorize(Roles = "Seller,Admin")]
+    [Authorize(Roles = "Seller,Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

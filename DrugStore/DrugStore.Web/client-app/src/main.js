@@ -4,8 +4,10 @@ import router from './router';
 import store from './store';
 import vuetify from './plugins/vuetify';
 import '@babel/polyfill';
+import axios from 'axios'
 
 Vue.config.productionTip = false;
+axios.defaults.baseURL = 'https://localhost:44313/'
 
 new Vue({
   router,
