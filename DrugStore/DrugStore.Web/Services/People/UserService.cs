@@ -151,7 +151,7 @@ namespace DrugStore.Web.Services.People
               _config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(10),
+              expires: DateTime.Now.AddMinutes(20),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

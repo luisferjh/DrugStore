@@ -10,8 +10,9 @@
             label="Search"
             single-line              
           ></v-text-field>
-          <v-spacer></v-spacer>
-          
+          <v-spacer></v-spacer>          
+
+          <!-- Dialog for adding new product -->
           <v-dialog v-model="dialogNewProduct" persistent max-width="600px">
             <template v-slot:activator="{ on }">
               <v-btn color="primary" dark class="mb-2" v-on="on">New Item</v-btn>
@@ -102,14 +103,15 @@
                   <small>*indica campo obligatorio</small>
                   
                 </v-card-text>
-        <v-card-actions>
-          <div class="flex-grow-1"></div>
-          <v-btn color="blue darken-1" text @click="dialogNewProduct = false">Cerrar</v-btn>
-          <v-btn color="blue darken-1" text @click="addNewProduct()">Guardar</v-btn>
-        </v-card-actions>
-      </v-card>
-            </v-dialog>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn color="blue darken-1" text @click="dialogNewProduct = false">Cerrar</v-btn>
+                  <v-btn color="blue darken-1" text @click="addNewProduct()">Guardar</v-btn>
+                </v-card-actions>
+              </v-card>
+          </v-dialog>
         </v-card-title> 
+        
         <v-data-table        
           :headers="headersDataGrid"
           :items="products"
@@ -131,13 +133,15 @@
           </template>
 
           <template v-slot:item.action="{ item }"> 
+        
             <v-icon
               small
-              class="mr-2"
-              @click=""
+              class="mr-2"                  
+              @click.stop="showProductforEdit(item)"
             >
               edit
-            </v-icon>
+            </v-icon>                                                                
+
             <v-icon
               small
               @click=""
@@ -147,13 +151,86 @@
           </template>  
         </v-data-table>
       </v-card>
+
+      <template>            
+        <v-dialog v-model="dialogEdit" max-width="600px">       
+          <v-card>
+            <v-card-title>
+              <span class="headline">Editar Producto</span>
+            </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="12">
+                      <v-text-field label="Nombre del producto*" v-model="product.productName" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="5">
+                      <v-select
+                        v-model="product"
+                        :items="categories"
+                        item-text="name"
+                        item-value="idCategory"
+                        label="Categoria*"
+                        required
+                      ></v-select>                        
+                    </v-col>
+                    <v-col cols="12" sm="6" md="5">
+                      <v-select
+                        v-model="product"
+                        :items="laboratories"
+                        item-text="laboratoryName"
+                        item-value="idLaboratory"
+                        label="Laboratorio*"
+                        required
+                      ></v-select>                         
+                    </v-col>
+                    <v-col cols="12" md="2">
+                      <v-text-field label="Stock*" v-model="product.stock" required></v-text-field>
+                    </v-col>                   
+
+                    <v-col cols="12">
+                      <v-text-field label="Codigo de barra*" v-model="product.barCode"></v-text-field>
+                    </v-col>                     
+
+                      <v-col cols="12">
+                      <v-text-field label="Indicativo*" v-model="product.indicative" ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field label="Precio*" v-model="product.price" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      
+                      <v-select
+                        v-model="product.condition"
+                        :items="[{'estado':'Activo', 'value':true}, {'estado':'Inactivo', 'value':false}]"   
+                        item-text="estado"
+                        item-value="value"                       
+                        label="Estado*"
+                        required
+                      ></v-select>  
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indica campo obligatorio</small>
+                
+              </v-card-text>
+              <v-card-actions>
+                <div class="flex-grow-1"></div>
+                <v-btn color="blue darken-1" text @click="dialogEdit = false">Cerrar</v-btn>
+                <v-btn color="blue darken-1" text @click="updateProduct()">Guardar</v-btn>
+              </v-card-actions>
+          </v-card>                               
+        </v-dialog>                              
+      </template>
+
     </v-layout>
   </v-container>
 </template>
 
 <script> 
   import axios from 'axios' 
-import { type } from 'os';
+  import { type } from 'os';
   export default {
     name:'GridProducts',
     data() {
@@ -169,6 +246,7 @@ import { type } from 'os';
           { text: 'Actions', value: 'action', sortable: false }
         ],
         products:[],
+        product:'',
         nameProduct:'',
         category:'',
         laboratory:'',
@@ -181,6 +259,7 @@ import { type } from 'os';
         categories:[],
         laboratories:[],
         dialogNewProduct:false,
+        dialogEdit:false,
         dueDate: new Date().toISOString().substr(0, 10),
         menu1: false
       }
@@ -198,7 +277,7 @@ import { type } from 'os';
         axios.get('api/product/list',headers)
         .then(function (response) {
           // handle success
-          me.products = response.data                                             
+          me.products = response.data                                                    
           })
         .catch(function (error) {
           // handle error          
@@ -247,7 +326,7 @@ import { type } from 'os';
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.post('api/product/Create',
+        axios.post('api/product/Create/',
           {
             'IdCategory':me.category,
             'IdLaboratory':me.laboratory,
@@ -265,6 +344,53 @@ import { type } from 'os';
           console.log('success') 
           this.dialogNewProduct = false                                          
           })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);  
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }       
+        })
+      },
+      //get by id
+      showProductforEdit(item){
+        this.product =    
+        {
+          'idProduct':item.idProduct,
+          'idCategory':item.idCategory,
+          'category':item.category,
+          'idLaboratory':item.idLaboratory,
+          'laboratory':item.laboratory,
+          'productName':item.productName,
+          'stock':item.stock,
+          'indicative':item.indicative,      
+          'barCode':item.barCode,
+          'price':item.price,
+          'condition':item.condition
+        }       
+        this.dialogEdit = true      
+      },
+      updateProduct(){
+        let me=this;                    
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}              
+        axios.put('api/product/update',
+        {
+            'IdProduct':me.product.idProduct,
+            'IdCategory':me.product.idCategory,
+            'IdLaboratory':me.product.idLaboratory,
+            'ProductName':me.product.productName,
+            'Stock':me.product.stock,
+            'Indicative':me.product.indicative,      
+            'Barcode':me.product.barCode,
+            'Price':parseFloat(me.product.price),
+            'Condition':me.product.condition
+        },headers)
+        .then(function (response) {
+          // handle success
+          console.log('Update Successful')                    
+          this.dialogEdit = false                                                    
+        })
         .catch(function (error) {
           // handle error          
           console.log(error);  
