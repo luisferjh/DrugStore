@@ -126,8 +126,7 @@ export default {
       axios.get('https://localhost:44313/api/user/getProfile/26')
         .then(function (response) {
         // handle success
-        me.profile = response.data 
-        console.log(me.profile)                                  
+        me.profile = response.data                             
         })
       .catch(function (error) {
         // handle error          

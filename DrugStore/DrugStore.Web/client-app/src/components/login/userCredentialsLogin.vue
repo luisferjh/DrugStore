@@ -65,8 +65,7 @@
 					Email:me.email,
 					Password: me.password					
         })
-          .then(response =>{     
-            console.log(response)       												
+          .then(response =>{                    												
             return response.data 
         })
           .then(data =>{            
