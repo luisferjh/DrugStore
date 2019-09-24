@@ -92,13 +92,6 @@
         productObj: Object.assign({}, this.product)
       }
     },
-   watch: {
-     //este watcher nos ayuda a actualizar 
-     //el producto enviado desde el componente padre
-     product(newValue, oldValue) {        
-       this.productObj = Object.assign({}, newValue)
-     }
-   },
     methods: {
       save() {
         this.$emit('save',{product:this.productObj})

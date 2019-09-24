@@ -1,4 +1,4 @@
-﻿using DrugStore.Entities.Store;
+﻿  using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store.Product;
 using System;
 using System.Collections;
@@ -21,3 +21,4 @@ namespace DrugStore.Web.Services.Store
         Task<Product> SearchProductById(int id);
     }
 }
+

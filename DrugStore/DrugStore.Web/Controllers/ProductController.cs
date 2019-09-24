@@ -54,7 +54,7 @@ namespace DrugStore.Web.Controllers
             {
                 return BadRequest(ModelState);
             }
-        
+
             try
             {
                 await _productService.AddProduct(product);
@@ -96,10 +96,10 @@ namespace DrugStore.Web.Controllers
                 }
             }
             catch (DbUpdateException)
-            {               
-                return BadRequest();                
+            {
+                return BadRequest();
             }
-                      
+
             return Ok();
         }
 
@@ -118,7 +118,7 @@ namespace DrugStore.Web.Controllers
                 await _productService.DeleteProduct(product);
             }
             catch (DbUpdateException)
-            {          
+            {
                 return BadRequest();
             }
             return Ok(product);
@@ -127,7 +127,7 @@ namespace DrugStore.Web.Controllers
         // PUT: api/Product/Deactivate/2
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Deactivate([FromRoute] int id)
-        {            
+        {
 
             if (id <= 0)
             {
@@ -183,3 +183,4 @@ namespace DrugStore.Web.Controllers
         }
     }
 }
+
