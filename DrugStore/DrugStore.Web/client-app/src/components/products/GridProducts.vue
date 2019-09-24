@@ -22,101 +22,9 @@
                 :laboratories="laboratories"
                 @save="addNewProduct"
                 @cancel="closeDialog"
-              /> 
+              />       
 
-              <!-- <v-card>
-                <v-card-title>
-                  <span class="headline">Nuevo Producto</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="12">
-                        <v-text-field label="Nombre del producto*" v-model="nameProduct" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="5">
-                        <v-select
-                          v-model="category"
-                          :items="categories"
-                          item-text="name"
-                          item-value="idCategory"
-                          label="Categoria*"
-                          required
-                        ></v-select>                        
-                      </v-col>
-                      <v-col cols="12" sm="6" md="5">
-                        <v-select
-                          v-model="laboratory"
-                          :items="laboratories"
-                          item-text="laboratoryName"
-                          item-value="idLaboratory"
-                          label="Laboratorio*"
-                          required
-                        ></v-select>                         
-                      </v-col>
-                      <v-col cols="12" md="2">
-                        <v-text-field label="Stock*" v-model="stock" required></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12" lg="6">
-                        <v-menu
-                          v-model="menu1"
-                          :close-on-content-click="false"
-                          full-width
-                          max-width="290"
-                        >
-                          <template v-slot:activator="{ on }">
-                            <v-text-field
-                              v-model="dueDate"
-                              clearable
-                              prepend-icon="event"
-                              label="Fecha de vencimiento"                              
-                              v-on="on"
-                            ></v-text-field>
-                          </template>
-                          <v-date-picker
-                            v-model="dueDate"
-                            no-title
-                            @change="menu1 = false"
-                          ></v-date-picker>
-                        </v-menu>
-                      </v-col>
-
-                      <v-col cols="12">
-                        <v-text-field label="Codigo de barra*" v-model="barCode"></v-text-field>
-                      </v-col>                     
-
-                       <v-col cols="12">
-                        <v-text-field label="Indicativo*" v-model="indicative" ></v-text-field>
-                      </v-col>
-
-                      <v-col cols="12">
-                        <v-text-field label="Precio*" v-model="price" required></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        
-                        <v-select
-                          v-model="estado"
-                          :items="[{'estado':'Activo', 'value':true}, {'estado':'Inactivo', 'value':false}]"   
-                          item-text="estado"
-                          item-value="value"                       
-                          label="Estado*"
-                          required
-                        ></v-select>  
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                  <small>*indica campo obligatorio</small>
-                  
-                </v-card-text>
-                <v-card-actions>
-                  <div class="flex-grow-1"></div>
-                  <v-btn color="blue darken-1" text @click="dialogNewProduct = false">Cerrar</v-btn>
-                  <v-btn color="blue darken-1" text @click="addNewProduct()">Guardar</v-btn>
-                </v-card-actions>
-              </v-card> -->
-
-          </v-dialog>
+          </v-dialog>         
         </v-card-title> 
         
         <v-data-table        
@@ -139,22 +47,30 @@
               </div>
           </template>
 
-          <template v-slot:item.action="{ item }"> 
-        
+          <template v-slot:item.action="{ item }">         
             <v-icon
               small
               class="mr-2"                  
-              @click.stop="showProductforEdit(item)"
+              @click="showProductforEdit(item)"
             >
               edit
             </v-icon>                                                                
-
-            <v-icon
+            <template v-if="item.condition">
+              <v-icon
               small
-              @click="deleteProduct(item)"
+              @click="activateDeactivateShowProduct(2,item)"
             >
-              delete
+              block
             </v-icon>
+            </template>
+             <template v-else>
+              <v-icon
+              small
+              @click="activateDeactivateShowProduct(1,item)"
+            >
+              check
+            </v-icon>
+            </template>
           </template>  
         </v-data-table>
       </v-card>
@@ -172,13 +88,36 @@
         </v-dialog>                              
       </template>
 
+      <template>
+        <v-dialog 
+          v-model="adModal"
+          max-width="290"
+          >
+            <v-card>
+              <v-card-title class="headline" v-if="adAction === 1">¿Activar Producto?</v-card-title>
+              <v-card-title class="headline" v-if="adAction === 2">¿Desactivar Producto?</v-card-title>
+              <v-card-text>
+                Estas a punto de
+                <span v-if="adAction === 1">Activar</span>
+                <span v-if="adAction === 2">Desactivar</span>
+                el producto {{ adName}}
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="green darken-1" flat="flat" @click="adModal=0">Cancelar</v-btn>
+                <v-btn v-if="adAction== 1" color="green darken-4" @click="activate()">Aceptar</v-btn>
+                <v-btn v-if="adAction== 2" color="green darken-4" @click="deactivate()">Aceptar</v-btn>
+              </v-card-actions>
+            </v-card>
+        </v-dialog>
+      </template>
+
     </v-layout>
   </v-container>
 </template>
 
 <script> 
-  import axios from 'axios' 
-  import { type } from 'os';
+  import axios from 'axios'   
   import FormNewProduct from '@/components/products/FormNewProduct'
   import FormEditProduct from '@/components/products/FormEditProduct'
 
@@ -206,7 +145,11 @@
         categories:[],
         laboratories:[],
         dialogNewProduct:false,
-        dialogEdit:false        
+        dialogEdit:false,
+        adModal:0,  //activar o desactivar el modal      
+        adAction:0,
+        adName:'',
+        adId:''
       }
     },
     created () {
@@ -267,8 +210,7 @@
           }       
         })
       },
-      addNewProduct(product){
-        console.log(product)
+      addNewProduct(product){   
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
@@ -299,14 +241,11 @@
         })
       },
       //get by id
-      showProductforEdit(item){              
-        // this.product =  Object.assign({},item)  
+      showProductforEdit(item){                    
         this.product = item       
         this.dialogEdit = true      
       },
       updateProduct(item){
-        // console.log('item $emit')
-        // console.log(item)
         this.product = item.product
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
@@ -337,15 +276,71 @@
           }       
         })
       },
-      deleteProduct(item){
+      activateDeactivateShowProduct(action, item){
+        this.adModal = 1 // se muestra el modal de confirmacion
+        this.adName = item.productName
+        this.adId =  item.idProduct      
 
+        if(action === 1)
+        {
+          this.adAction = 1
+        }
+        else if(action === 2)
+        {
+           this.adAction = 2
+        }
+        else{
+          this.adModal = 0
+        }
+      },
+      activate(){
+        let me=this;                    
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        axios.put('api/product/Activate/'+ this.adId, {}, headers)
+        .then(function (response) {
+          // handle success
+          console.log('success') 
+          me.adModal = 0
+          me.adAction = 0
+          me.adName = ""
+          me.adId = ""
+          me.listProducts()                                                                  
+          })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);  
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }       
+        })
+      },
+      deactivate(){
+        let me=this;                    
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        axios.put('api/product/Deactivate/'+ this.adId, {}, headers)
+        .then(function (response) {
+          // handle success
+          console.log('success') 
+          me.adModal = 0
+          me.adAction = 0
+          me.adName = ""
+          me.adId = ""
+          me.listProducts()                                                                  
+          })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);  
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }       
+        })
       },
       clearForm(){
 
       },
       closeDialog(switchBool){
-        // this.dialogEdit = false
-        // this.dialogNewProduct = false
         this.dialogEdit = switchBool
         this.dialogNewProduct = switchBool
       },

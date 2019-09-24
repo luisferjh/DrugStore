@@ -107,6 +107,26 @@ namespace DrugStore.Web.Services.Store
             await _context.SaveChangesAsync();                       
         }
 
+        public async Task ActivateProduct(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.IdProduct == id);
+
+            product.Condition = true;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeactivateProduct(int id)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.IdProduct == id);
+
+            product.Condition = false;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<bool> ProductExists(int id)
         {
             return await _context.Products.AnyAsync(p => p.IdProduct == id);
@@ -122,5 +142,6 @@ namespace DrugStore.Web.Services.Store
 
             return product;
         }
+        
     }
 }

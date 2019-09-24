@@ -15,6 +15,8 @@ namespace DrugStore.Web.Services.Store
         Task AddProduct(CreateViewModel model);
         Task UpdateProduct(UpdateViewModel model);
         Task DeleteProduct(Product Pproduct);
+        Task ActivateProduct(int id);
+        Task DeactivateProduct(int id);
         Task<bool> ProductExists(int id);
         Task<Product> SearchProductById(int id);
     }

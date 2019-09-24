@@ -119,9 +119,6 @@
         menu1: false
       }
     },
-    created () {
-      // this.productObj= Object.assign({}, this.product)  
-    },
     methods: {
       save() {
         this.$emit('save',{ 

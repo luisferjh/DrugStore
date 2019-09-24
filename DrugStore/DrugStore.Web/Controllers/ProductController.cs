@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
-    [Authorize(Roles = "Seller,Admin")]
+    [Authorize(Roles = "Admin, Seller")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -70,7 +70,7 @@ namespace DrugStore.Web.Controllers
             return Ok();
         }
 
-        // PUT: api/Product/5
+        // PUT: api/Product/Update/
         [HttpPut("[action]")]
         public async Task<IActionResult> Update([FromBody] UpdateViewModel product)
         {
@@ -103,7 +103,7 @@ namespace DrugStore.Web.Controllers
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/product/Delete/5
         [HttpDelete("[action]/{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
@@ -122,6 +122,64 @@ namespace DrugStore.Web.Controllers
                 return BadRequest();
             }
             return Ok(product);
+        }
+
+        // PUT: api/Product/Deactivate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Deactivate([FromRoute] int id)
+        {            
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _productService.DeactivateProduct(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _productService.ProductExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/Product/activate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activate([FromRoute] int id)
+        {
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _productService.ActivateProduct(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _productService.ProductExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }
