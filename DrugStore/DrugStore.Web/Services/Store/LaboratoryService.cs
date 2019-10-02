@@ -80,6 +80,26 @@ namespace DrugStore.Web.Services.Store
             await _context.SaveChangesAsync();         
         }
 
+        public async Task ActivateLab(int id)
+        {
+            var lab = await _context.Laboratories
+                .FirstOrDefaultAsync(p => p.IdLaboratory == id);
+
+            lab.Condition = true;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeactivateLab(int id)
+        {
+            var lab = await _context.Laboratories
+                .FirstOrDefaultAsync(p => p.IdLaboratory == id);
+
+            lab.Condition = false;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteLaboratory(Laboratory Plaboratory)
         {        
             _context.Laboratories.Remove(Plaboratory);

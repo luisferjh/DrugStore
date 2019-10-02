@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrugStore.Web.Models.Store.Laboratory;
 using DrugStore.Web.Services.Store;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Seller")]
     [Route("api/[controller]")]
     [ApiController]
     public class LaboratoryController : ControllerBase
@@ -96,6 +98,64 @@ namespace DrugStore.Web.Controllers
                 {
                     return BadRequest();
                 }
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/laboratory/Deactivate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Deactivate([FromRoute] int id)
+        {
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _laboratoryService.DeactivateLab(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _laboratoryService.LabExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/laboratory/activate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activate([FromRoute] int id)
+        {
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _laboratoryService.ActivateLab(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _laboratoryService.LabExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
             }
 
             return Ok();

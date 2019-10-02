@@ -125,15 +125,15 @@
     methods: {
       save() {
         this.$emit('save',{ 
-            'idCategory':this.category,
-            'idLaboratory':this.laboratory,
-            'productName':this.nameProduct,
-            'stock':this.stock,
-            'indicative':this.indicative,                        
-            'barCode':this.barCode,
-            'price':parseFloat(this.price),
-            'condition':this.estado
-            })
+          'idCategory':this.category,
+          'idLaboratory':this.laboratory,
+          'productName':this.nameProduct,
+          'stock':this.stock,
+          'indicative':this.indicative,                        
+          'barCode':this.barCode,
+          'price':parseFloat(this.price),
+          'condition':this.estado
+        })
       },
       cancel(){
         this.$emit('cancel',false)

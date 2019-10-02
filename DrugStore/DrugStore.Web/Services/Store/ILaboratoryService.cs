@@ -14,6 +14,8 @@ namespace DrugStore.Web.Services.Store
         Task<LaboratoryViewModel> GetLaboratory(int id);
         Task AddLaboratory(CreateViewModel model);
         Task UpdateLaboratory(UpdateViewModel model);
+        Task ActivateLab(int id);
+        Task DeactivateLab(int id);
         Task DeleteLaboratory(Laboratory Plaboratory);
         Task<bool> LabExists(int id);
         Task<Laboratory> SearchLabById(int id);

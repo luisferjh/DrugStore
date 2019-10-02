@@ -50,19 +50,80 @@
             <v-icon v-text="'shopping_cart'"></v-icon>
           </v-list-item-action>  
         </v-list-item>
+
+        <v-list-item :to="{name:'laboratory'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Laboratorios'"></v-list-item-title>                   
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'label'"></v-icon>
+          </v-list-item-action>  
+        </v-list-item>
                   
       </v-list-group>
 
-        <v-list-item :to="{name:'about'}" exact>
-          <v-list-item-icon>
-            <v-icon>shopping_cart</v-icon>
-          </v-list-item-icon>
+      <v-list-group
+        prepend-icon="credit_card"                     
+      >
+        <template v-slot:activator>         
           <v-list-item-content>
             <v-list-item-title>Ventas</v-list-item-title>
+          </v-list-item-content>                    
+        </template>       
+     
+        <v-list-item :to="{name:'client'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Clientes'"></v-list-item-title>                   
           </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'assignment'"></v-icon>
+          </v-list-item-action>  
+        </v-list-item>     
+                  
+      </v-list-group>      
+
+      <v-list-group
+        prepend-icon="account_balance_wallet"                     
+      >
+        <template v-slot:activator>         
+          <v-list-item-content>
+            <v-list-item-title>Gestion de Pedidos</v-list-item-title>
+          </v-list-item-content>                    
+        </template>       
+     
+        <v-list-item :to="{name:'order'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Pedidos'"></v-list-item-title>                   
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'assignment'"></v-icon>
+          </v-list-item-action>  
         </v-list-item>
 
-         <v-list-item>
+        <v-list-item :to="{name:'provider'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Proveedores'"></v-list-item-title>                   
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'group_work'"></v-icon>
+          </v-list-item-action>  
+        </v-list-item>
+                  
+      </v-list-group>
+
+        <v-list-item>
           <v-list-item-icon>
             <v-icon>account_box</v-icon>
           </v-list-item-icon>
@@ -72,8 +133,8 @@
         </v-list-item>
 
         <v-list-group
-        prepend-icon="dashboard"        
-      >
+          prepend-icon="dashboard"        
+        >
         <template v-slot:activator>
           <v-list-item-content>
             <v-list-item-title v-text="'test'"></v-list-item-title>

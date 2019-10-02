@@ -2,7 +2,7 @@
   <v-container>
     <v-layout>
       <v-card flat color="white">
-        <v-card-title>Productos
+        <v-card-title>Clientes
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -13,14 +13,12 @@
           <v-spacer></v-spacer>          
 
           <!-- Dialog for adding new product -->
-          <v-dialog v-model="dialogNewProduct" persistent max-width="600px">
+          <v-dialog v-model="dialogNewClient" persistent max-width="600px">
             <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Producto</v-btn>
+              <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Cliente</v-btn>
             </template>
-              <FormNewProduct                 
-                :categories="categories"
-                :laboratories="laboratories"
-                @save="addNewProduct"
+              <FormNewClient                              
+                @save="addNewClient"
                 @cancel="closeDialog"
               />       
           </v-dialog>         
@@ -28,14 +26,10 @@
         
         <v-data-table        
           :headers="headersDataGrid"
-          :items="products"
+          :items="clients"
           :search="search"
           class="elevation-1"      
-        >                    
-                                
-          <template v-slot:item.stock="{item}">                
-            <v-chip :color="getColor(item.stock)" dark>{{item.stock}}</v-chip>
-          </template>
+        >                                                          
           
           <template v-slot:item.condition="{item}">                
               <div v-if="item.condition">
@@ -50,14 +44,14 @@
             <v-icon
               small
               class="mr-2"                  
-              @click="showProductforEdit(item)"
+              @click="showClientforEdit(item)"
             >
               edit
             </v-icon>                                                                
             <template v-if="item.condition">
               <v-icon
                 small
-                @click="activateDeactivateShowProduct(2,item)"
+                @click="activateDeactivateShowClient(2,item)"
               >
                 block
               </v-icon>
@@ -65,7 +59,7 @@
              <template v-else>
               <v-icon
                 small
-                @click="activateDeactivateShowProduct(1,item)"
+                @click="activateDeactivateShowClient(1,item)"
               >
                 check
               </v-icon>
@@ -76,11 +70,9 @@
 
       <template>            
         <v-dialog v-model="dialogEdit" max-width="600px">       
-          <FormEditProduct
-            :product="product" 
-            :categories="categories"
-            :laboratories="laboratories"             
-            @save="updateProduct"
+          <FormEditClient
+            :client="client"                   
+            @save="updateClient"
             @cancel="closeDialog"
           />  
                       
@@ -93,13 +85,13 @@
           max-width="290"
           >
             <v-card>
-              <v-card-title class="headline" v-if="adAction === 1">¿Activar Producto?</v-card-title>
-              <v-card-title class="headline" v-if="adAction === 2">¿Desactivar Producto?</v-card-title>
+              <v-card-title class="headline" v-if="adAction === 1">¿Activar Cliente?</v-card-title>
+              <v-card-title class="headline" v-if="adAction === 2">¿Desactivar Cliente?</v-card-title>
               <v-card-text>
                 Estas a punto de
                 <span v-if="adAction === 1">Activar</span>
                 <span v-if="adAction === 2">Desactivar</span>
-                el producto {{ adName}}
+                el cliente {{ adName}}
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -117,33 +109,30 @@
 
 <script> 
   import axios from 'axios'   
-  import FormNewProduct from '@/components/products/FormNewProduct'
-  import FormEditProduct from '@/components/products/FormEditProduct'
+  import FormNewClient from '@/components/clients/FormNewClient'
+  import FormEditClient from '@/components/clients/FormEditClient'
 
-  export default {
-    name:'GridProducts',
+  export default { 
     components: {
-      FormNewProduct,
-      FormEditProduct
+      FormNewClient,
+      FormEditClient
     },
     data() {
       return {
         headersDataGrid:[
-          {text:'ID', value:'idProduct'},
-          {text:'Nombre', value:'productName'},
-          {text:'Categoria', value:'category'},
-          {text:'Laboratorio', value:'laboratory'},
-          {text:'Stock', value:'stock'},
-          {text:'Precio', value:'price'},
+          {text:'ID', value:'idClient'},
+          {text:'Nombre', value:'name'},
+          {text:'Apellidos', value:'lastName'},
+          {text:'Tipo de Documento', value:'documentType'},
+          {text:'Numero De Documento', value:'documentNumber'},
+          {text:'Numero de telefono', value:'phoneNumber'},
           {text:'Estado', value:'condition'},
           { text: 'Actions', value: 'action', sortable: false }
         ],
-        products:[],
-        product:'',        
-        search:'',
-        categories:[],
-        laboratories:[],
-        dialogNewProduct:false,
+        clients:[],
+        client:'',        
+        search:'',        
+        dialogNewClient:false,
         dialogEdit:false,
         adModal:0,  //activar o desactivar el modal      
         adAction:0,
@@ -152,19 +141,17 @@
       }
     },
     created () {
-      this.listProducts()
-      this.fetchCategories()
-      this.fetchLaboratories()
+      this.listClients()     
     },   
     methods: {
-      listProducts() {
+      listClients() {
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.get('api/product/list',headers)
+        axios.get('api/client/list',headers)
         .then(function (response) {
           // handle success
-          me.products = response.data                                                    
+          me.clients = response.data                                                    
           })
         .catch(function (error) {
           // handle error          
@@ -173,62 +160,25 @@
 						me.$store.dispatch('exit')
           }      
         })
-      },
-      fetchCategories(){
+      },        
+      addNewClient(client){   
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.get('api/category/list',headers)
-        .then(function (response) {
-          // handle success
-          me.categories = response.data   
-          // console.log(response.data )                                               
-          })
-        .catch(function (error) {
-          // handle error          
-          console.log(error); 
-          if (error.response.status === 401) {						
-						me.$store.dispatch('exit')
-          }        
-        })
-      },    
-      fetchLaboratories(){
-        let me=this;                    
-        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
-        let headers = {headers:AuthorizationHeader}
-        axios.get('api/laboratory/list',headers)
-        .then(function (response) {
-          // handle success
-          me.laboratories = response.data                                                    
-          })
-        .catch(function (error) {
-          // handle error          
-          console.log(error);  
-          if (error.response.status === 401) {						
-						me.$store.dispatch('exit')
-          }       
-        })
-      },
-      addNewProduct(product){   
-        let me=this;                    
-        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
-        let headers = {headers:AuthorizationHeader}
-        axios.post('api/product/Create/',
-          {
-            'IdCategory':product.idCategory,
-            'IdLaboratory':product.idLaboratory,
-            'ProductName':product.productName,
-            'Stock':product.stock,
-            'Indicative':product.indicative,            
-            'BarCode':product.barCode,
-            'Price':product.price,
-            'Condition':product.condition
+        axios.post('api/Client/Create/',
+          {            
+            'Name':client.name,
+            'LastName':client.lastName,
+            'DocumentType':client.documentType,            
+            'DocumentNumber':client.documentNumber,
+            'PhoneNumber':client.phoneNumber,
+            'Condition':client.condition
           },
           headers)
         .then(function (response) {
           // handle success
           console.log('success') 
-          me.listProducts()
+          me.listClients()
           me.closeDialog()                                                    
           })
         .catch(function (error) {
@@ -240,32 +190,30 @@
         })
       },
       //get by id
-      showProductforEdit(item){                    
-        this.product = item       
+      showClientforEdit(item){                    
+        this.client = item       
         this.dialogEdit = true      
       },
-      updateProduct(item){
-        this.product = item.product
+      updateClient(item){
+        this.client = item.client
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}              
-        axios.put('api/product/update',
+        axios.put('api/client/update',
         {
-          'IdProduct':me.product.idProduct,
-          'IdCategory':me.product.idCategory,
-          'IdLaboratory':me.product.idLaboratory,
-          'ProductName':me.product.productName,
-          'Stock':me.product.stock,
-          'Indicative':me.product.indicative,      
-          'Barcode':me.product.barCode,
-          'Price':parseFloat(me.product.price),
-          'Condition':me.product.condition
+          'IdProduct':me.client.idClient,
+          'Name':me.client.name,
+          'LastName':me.client.lastName,
+          'DocumentType':me.client.documentType,            
+          'DocumentNumber':me.client.documentNumber,
+          'PhoneNumber':me.client.phoneNumber,
+          'Condition':me.client.condition
         },headers)
         .then(function (response) {
           // handle success
           console.log('Update Successful')       
           me.closeDialog()     
-          me.listProducts()                                                                      
+          me.listClients()                                                                      
         })
         .catch(function (error) {
           // handle error          
@@ -275,10 +223,10 @@
           }       
         })
       },
-      activateDeactivateShowProduct(action, item){
+      activateDeactivateShowClient(action, item){
         this.adModal = 1 // se muestra el modal de confirmacion
-        this.adName = item.productName
-        this.adId =  item.idProduct      
+        this.adName = item.name + " " + item.lastName
+        this.adId =  item.idClient      
 
         if(action === 1)
         {
@@ -296,15 +244,14 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.put('api/product/Activate/'+ this.adId, {}, headers)
+        axios.put('api/client/Activate/'+ this.adId, {}, headers)
         .then(function (response) {
-          // handle success
-          console.log('success') 
+          // handle success     
           me.adModal = 0
           me.adAction = 0
           me.adName = ""
           me.adId = ""
-          me.listProducts()                                                                  
+          me.listClients()                                                                  
           })
         .catch(function (error) {
           // handle error          
@@ -318,15 +265,14 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.put('api/product/Deactivate/'+ this.adId, {}, headers)
+        axios.put('api/client/Deactivate/'+ this.adId, {}, headers)
         .then(function (response) {
-          // handle success
-          console.log('success') 
+          // handle success         
           me.adModal = 0
           me.adAction = 0
           me.adName = ""
           me.adId = ""
-          me.listProducts()                                                                  
+          me.listClients()                                                                 
           })
         .catch(function (error) {
           // handle error          
@@ -341,14 +287,8 @@
       },
       closeDialog(switchBool){
         this.dialogEdit = switchBool
-        this.dialogNewProduct = switchBool
-      },
-      // colorear el stock deacuerdo a las unidades
-      getColor(stock){
-        if (stock > 30) return 'green'
-        else if (stock > 10) return 'orange'
-        else return 'red'
-      }
+        this.dialogNewClient = switchBool
+      }      
     },
   }
 </script>

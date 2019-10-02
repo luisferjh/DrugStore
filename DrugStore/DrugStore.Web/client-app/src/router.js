@@ -2,8 +2,12 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Product from './views/Product.vue'
+import Laboratory from './views/Laboratory.vue'
+import Order from './views/Order.vue'
+import Provider from './views/Provider.vue'
 import Login from './views/Login.vue'
 import About from './views/about.vue'
+import Client from './views/Client.vue'
 import store from './store'
 
 Vue.use(Router);
@@ -27,6 +31,41 @@ var router = new Router({
       meta:{
         admin:true,
         seller:true
+      }
+    },
+    {
+      path: '/lab',
+      name: 'laboratory',
+      component: Laboratory,
+      meta:{
+        admin:true,
+        seller:true
+      }
+    },
+    {
+      path: '/provider',
+      name: 'provider',
+      component: Provider,
+      meta:{
+        admin:true,
+        seller:true
+      }
+    },
+    {
+      path: '/client',
+      name: 'client',
+      component: Client,
+      meta:{
+        admin:true,
+        seller:true
+      }
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: Order,
+      meta:{
+        admin:true        
       }
     },
     {
