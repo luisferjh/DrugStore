@@ -115,6 +115,25 @@ namespace DrugStore.Web.Services.People
 
             return client;
         }
-        
+
+        public async Task ActivateClient(int id)
+        {
+            var client = await _context.Clients
+              .FirstOrDefaultAsync(p => p.IdClient == id);
+
+            client.Condition = true;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeactivateClient(int id)
+        {
+            var client = await _context.Clients
+               .FirstOrDefaultAsync(p => p.IdClient == id);
+
+            client.Condition = false;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

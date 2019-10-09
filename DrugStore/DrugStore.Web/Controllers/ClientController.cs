@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrugStore.Web.Models.People.Client;
 using DrugStore.Web.Services.People;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Seller")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
@@ -42,8 +44,8 @@ namespace DrugStore.Web.Controllers
             return Ok(client);
         }
 
-        // POST: api/Client
-        [HttpPost("action")]
+        // POST: api/Client/model
+        [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] CreateViewModel clientModel)
         {
             if (!ModelState.IsValid)
@@ -67,7 +69,7 @@ namespace DrugStore.Web.Controllers
         }
 
         // PUT: api/Client/5
-        [HttpPut("[action]/{id}")]
+        [HttpPut("[action]")]
         public async Task<IActionResult> Update([FromBody] UpdateViewModel clientModel)
         {
             if (!ModelState.IsValid)
@@ -97,6 +99,64 @@ namespace DrugStore.Web.Controllers
                 }
 
             }
+            return Ok();
+        }
+
+        // PUT: api/client/Deactivate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Deactivate([FromRoute] int id)
+        {
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _clientService.DeactivateClient(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _clientService.ClientExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // PUT: api/client/activate/2
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activate([FromRoute] int id)
+        {
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                await _clientService.ActivateClient(id);
+            }
+            catch (NullReferenceException)
+            {
+                if (!(await _clientService.ClientExists(id)))
+                {
+                    return NotFound();
+                }
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
 

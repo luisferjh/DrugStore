@@ -44,7 +44,7 @@
             <v-icon
               small
               class="mr-2"                  
-              @click="showClientforEdit(item)"
+              @click="showClientForEdit(item)"
             >
               edit
             </v-icon>                                                                
@@ -165,7 +165,7 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.post('api/Client/Create/',
+        axios.post('api/client/create/',
           {            
             'Name':client.name,
             'LastName':client.lastName,
@@ -173,8 +173,7 @@
             'DocumentNumber':client.documentNumber,
             'PhoneNumber':client.phoneNumber,
             'Condition':client.condition
-          },
-          headers)
+          }, headers)
         .then(function (response) {
           // handle success
           console.log('success') 
@@ -190,7 +189,7 @@
         })
       },
       //get by id
-      showClientforEdit(item){                    
+      showClientForEdit(item){                    
         this.client = item       
         this.dialogEdit = true      
       },
@@ -201,7 +200,7 @@
         let headers = {headers:AuthorizationHeader}              
         axios.put('api/client/update',
         {
-          'IdProduct':me.client.idClient,
+          'IdClient':me.client.idClient,
           'Name':me.client.name,
           'LastName':me.client.lastName,
           'DocumentType':me.client.documentType,            

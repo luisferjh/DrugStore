@@ -184,8 +184,7 @@
           }       
         })
       },
-      showLabforEdit(item){           
-        console.log(item)         
+      showLabforEdit(item){                      
         this.lab = item       
         this.dialogEdit = true      
       },

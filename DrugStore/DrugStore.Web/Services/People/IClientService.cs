@@ -13,6 +13,8 @@ namespace DrugStore.Web.Services.People
         Task<ClientViewModel> GetClient(int id);
         Task AddClient(CreateViewModel clientModel);
         Task UpdateClient(UpdateViewModel clientModel);
+        Task ActivateClient(int id);
+        Task DeactivateClient(int id);
         Task DeleteClient(Client client);
         Task<IEnumerable<SelectViewModel>> SelectClient(); 
         Task<bool> ClientExists(int id);
