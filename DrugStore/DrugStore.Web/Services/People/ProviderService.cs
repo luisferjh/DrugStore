@@ -108,6 +108,6 @@ namespace DrugStore.Web.Services.People
 
             return provider;
         }
-       
+     
     }
 }

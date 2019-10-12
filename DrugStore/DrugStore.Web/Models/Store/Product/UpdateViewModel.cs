@@ -16,7 +16,6 @@ namespace DrugStore.Web.Models.Store.Product
         public string BarCode { get; set; }
         public string Indicative { get; set; }
         public int Stock { get; set; }
-        public decimal Price { get; set; }
-        public Boolean Condition { get; set; }
+        public decimal Price { get; set; }        
     }
 }

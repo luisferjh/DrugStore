@@ -94,8 +94,7 @@ namespace DrugStore.Web.Services.Store
             product.BarCode = model.BarCode;
             product.Indicative = model.Indicative;
             product.Stock = model.Stock;
-            product.Price = model.Price;
-            product.Condition = model.Condition;
+            product.Price = model.Price;       
 
             await _context.SaveChangesAsync();
 

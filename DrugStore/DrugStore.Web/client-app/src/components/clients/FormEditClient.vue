@@ -25,18 +25,7 @@
 
               <v-col cols="12">
                 <v-text-field label="Numero de telefono" v-model="clientObj.phoneNumber" required></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                
-                <v-select
-                  v-model="clientObj.condition"
-                  :items="[{'estado':'Activo', 'value':true}, {'estado':'Inactivo', 'value':false}]"   
-                  item-text="estado"
-                  item-value="value"                       
-                  label="Estado*"
-                  required
-                ></v-select>  
-              </v-col>
+              </v-col>             
             </v-row>
           </v-container>
           <small>*indica campo obligatorio</small>        

@@ -1,9 +1,12 @@
 <template>
-  <h1>Provider</h1>
+  <GridProviderActions />
 </template>
 
 <script>
+  import GridProviderActions from '@/components/provider/GridProviderActions' 
   export default {
-    
+    components: {
+      GridProviderActions,
+    },
   }
 </script>

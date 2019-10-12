@@ -34,6 +34,6 @@ namespace DrugStore.Web.Models.People.User
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public bool act_Password { get; set; }      
+        public bool Act_Password { get; set; }      
     }
 }

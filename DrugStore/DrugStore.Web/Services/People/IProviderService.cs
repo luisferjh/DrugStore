@@ -12,7 +12,7 @@ namespace DrugStore.Web.Services.People
         Task<IEnumerable<ProviderViewModel>> List();
         Task<ProviderViewModel> GetProvider(int id);
         Task AddProvider(CreateViewModel providerModel);
-        Task UpdateProvider(UpdateViewModel providerModel);
+        Task UpdateProvider(UpdateViewModel providerModel);       
         Task DeleteProvider(Provider provider);
         Task<IEnumerable<SelectViewModel>> SelectProvider();
         Task<bool> ProviderExists(int id);

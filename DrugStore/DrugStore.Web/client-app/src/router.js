@@ -4,9 +4,9 @@ import Home from './views/Home.vue';
 import Product from './views/Product.vue'
 import Laboratory from './views/Laboratory.vue'
 import Order from './views/Order.vue'
+import User from './views/User.vue'
 import Provider from './views/Provider.vue'
 import Login from './views/Login.vue'
-import About from './views/about.vue'
 import Client from './views/Client.vue'
 import store from './store'
 
@@ -59,6 +59,14 @@ var router = new Router({
         admin:true,
         seller:true
       }
+    },   
+    {
+      path: '/user',
+      name: 'user',
+      component: User,
+      meta:{
+        admin:true      
+      }
     },
     {
       path: '/order',
@@ -67,15 +75,7 @@ var router = new Router({
       meta:{
         admin:true        
       }
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: About,
-      meta:{
-        free:true
-      }     
-    },
+    },   
     {
       path: '/login',
       name: 'login',

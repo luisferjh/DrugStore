@@ -74,8 +74,7 @@ namespace DrugStore.Web.Services.Store
             c.IdLaboratory == model.IdLaboratory);
             
             lab.LaboratoryName = model.LaboratoryName;
-            lab.Description = model.Description;
-            lab.Condition = model.Condition;
+            lab.Description = model.Description;   
 
             await _context.SaveChangesAsync();         
         }

@@ -88,8 +88,7 @@ namespace DrugStore.Web.Services.People
             client.LastName = clientModel.LastName;
             client.DocumentType = clientModel.DocumentType;
             client.DocumentNumber = clientModel.DocumentNumber;
-            client.PhoneNumber = clientModel.PhoneNumber;
-            client.Condition = clientModel.Condition;
+            client.PhoneNumber = clientModel.PhoneNumber;    
 
             await _context.SaveChangesAsync();
         }

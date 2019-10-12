@@ -123,6 +123,29 @@
                   
       </v-list-group>
 
+      <v-list-group
+        prepend-icon="account_balance_wallet"                     
+       >
+        <template v-slot:activator>         
+          <v-list-item-content>
+            <v-list-item-title>Accesos</v-list-item-title>
+          </v-list-item-content>                    
+        </template>       
+             
+        <v-list-item :to="{name:'user'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Usuarios'"></v-list-item-title>                   
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'group_work'"></v-icon>
+          </v-list-item-action>  
+        </v-list-item>
+                  
+      </v-list-group>
+
         <v-list-item>
           <v-list-item-icon>
             <v-icon>account_box</v-icon>
@@ -182,9 +205,9 @@ export default {
   methods: {
     fetchProfile() {
       let me=this;                    
-      // let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
-      // let headers = {headers:AuthorizationHeader}
-      axios.get('https://localhost:44313/api/user/getProfile/26')
+      let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+      let headers = {headers:AuthorizationHeader}
+      axios.get('https://localhost:44313/api/user/getProfile/26',headers)
         .then(function (response) {
         // handle success
         me.profile = response.data                             

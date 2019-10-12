@@ -9,7 +9,6 @@ namespace DrugStore.Web.Models.Store.Laboratory
     {
         public int IdLaboratory { get; set; }
         public string LaboratoryName { get; set; }
-        public string Description { get; set; }
-        public Boolean Condition { get; set; }
+        public string Description { get; set; }       
     }
 }

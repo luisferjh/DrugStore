@@ -187,8 +187,7 @@ namespace DrugStore.Test.Products
             model.BarCode = productValue.BarCode;
             model.Indicative = "2 veces al dia despues de cada comida";
             model.Stock = productValue.Stock;
-            model.Price = productValue.Price ;
-            model.Condition = productValue.Condition;
+            model.Price = productValue.Price ;     
 
             var productUpdateOk = await controller.Update(model);
 
@@ -217,8 +216,7 @@ namespace DrugStore.Test.Products
             model.BarCode = "";
             model.Indicative = "suministrar dos dosis minimas";
             model.Stock = 25;
-            model.Price = 12.00m;
-            model.Condition = true;
+            model.Price = 12.00m;       
 
             // Act         
             var productUpdateOk = await controller.Update(model);
@@ -244,7 +242,6 @@ namespace DrugStore.Test.Products
             model.Indicative = "suministrar dos dosis minimas";
             model.Stock = 25;
             model.Price = 12.00m;
-            model.Condition = true;
 
             // Act         
             var productUpdateNotFound = await controller.Update(model);

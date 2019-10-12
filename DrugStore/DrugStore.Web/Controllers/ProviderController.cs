@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrugStore.Web.Models.People.Provider;
 using DrugStore.Web.Services.People;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Seller")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProviderController : ControllerBase
@@ -65,8 +67,8 @@ namespace DrugStore.Web.Controllers
             return Ok();
         }
 
-        // PUT: api/Provider/5
-        [HttpPut("[action]/{id}")]
+        // PUT: api/Provider/
+        [HttpPut("[action]")]
         public async Task<IActionResult> Update([FromBody] UpdateViewModel providerModel)
         {
             if (!ModelState.IsValid)

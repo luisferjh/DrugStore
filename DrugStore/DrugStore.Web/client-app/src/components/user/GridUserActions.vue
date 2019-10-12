@@ -2,7 +2,7 @@
   <v-container>
     <v-layout>
       <v-card flat color="white">
-        <v-card-title>Productos
+        <v-card-title>Usuarios
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -13,14 +13,13 @@
           <v-spacer></v-spacer>          
 
           <!-- Dialog for adding new product -->
-          <v-dialog v-model="dialogNewProduct" persistent max-width="600px">
+          <v-dialog v-model="dialogNewUser" persistent max-width="600px">
             <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Producto</v-btn>
+              <v-btn color="primary" dark class="mb-2" v-on="on">Nuevo Usuario</v-btn>
             </template>
-              <FormNewProduct                 
-                :categories="categories"
-                :laboratories="laboratories"
-                @save="addNewProduct"
+              <FormNewUser    
+                :roles="roles"                          
+                @save="addNewUser"
                 @cancel="closeDialog"
               />       
           </v-dialog>         
@@ -28,14 +27,10 @@
         
         <v-data-table        
           :headers="headersDataGrid"
-          :items="products"
+          :items="users"
           :search="search"
           class="elevation-1"      
-        >                    
-                                
-          <template v-slot:item.stock="{item}">                
-            <v-chip :color="getColor(item.stock)" dark>{{item.stock}}</v-chip>
-          </template>
+        >                                                          
           
           <template v-slot:item.condition="{item}">                
               <div v-if="item.condition">
@@ -50,14 +45,14 @@
             <v-icon
               small
               class="mr-2"                  
-              @click="showProductforEdit(item)"
+              @click="showUserForEdit(item)"
             >
               edit
             </v-icon>                                                                
             <template v-if="item.condition">
               <v-icon
                 small
-                @click="activateDeactivateShowProduct(2,item)"
+                @click="activateDeactivateShowUser(2,item)"
               >
                 block
               </v-icon>
@@ -65,7 +60,7 @@
              <template v-else>
               <v-icon
                 small
-                @click="activateDeactivateShowProduct(1,item)"
+                @click="activateDeactivateShowUser(1,item)"
               >
                 check
               </v-icon>
@@ -76,11 +71,10 @@
 
       <template>            
         <v-dialog v-model="dialogEdit" max-width="600px">       
-          <FormEditProduct
-            :product="product" 
-            :categories="categories"
-            :laboratories="laboratories"             
-            @save="updateProduct"
+          <FormEditUser
+            :user="user"  
+            :roles="roles"                                    
+            @save="updateUser"
             @cancel="closeDialog"
           />  
                       
@@ -93,13 +87,13 @@
           max-width="290"
           >
             <v-card>
-              <v-card-title class="headline" v-if="adAction === 1">¿Activar Producto?</v-card-title>
-              <v-card-title class="headline" v-if="adAction === 2">¿Desactivar Producto?</v-card-title>
+              <v-card-title class="headline" v-if="adAction === 1">¿Activar Usuario?</v-card-title>
+              <v-card-title class="headline" v-if="adAction === 2">¿Desactivar Usuario?</v-card-title>
               <v-card-text>
                 Estas a punto de
                 <span v-if="adAction === 1">Activar</span>
                 <span v-if="adAction === 2">Desactivar</span>
-                el producto {{ adName}}
+                el usuario {{ adName}}
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -117,33 +111,32 @@
 
 <script> 
   import axios from 'axios'   
-  import FormNewProduct from '@/components/products/FormNewProduct'
-  import FormEditProduct from '@/components/products/FormEditProduct'
+  import FormNewUser from '@/components/user/FormNewUser'
+  import FormEditUser from '@/components/user/FormEditUser'
 
-  export default {
-    name:'GridProducts',
+  export default { 
     components: {
-      FormNewProduct,
-      FormEditProduct
+      FormNewUser,
+      FormEditUser
     },
     data() {
       return {
         headersDataGrid:[
-          {text:'ID', value:'idProduct'},
-          {text:'Nombre', value:'productName'},
-          {text:'Categoria', value:'category'},
-          {text:'Laboratorio', value:'laboratory'},
-          {text:'Stock', value:'stock'},
-          {text:'Precio', value:'price'},
+          {text:'ID', value:'idUser'},
+          {text:'Rol', value:'role'},
+          {text:'Nombre de usuario', value:'userName'},         
+          {text:'Numero De Documento', value:'documentNumber'},
+          {text:'Direccion', value:'address'},
+          {text:'Numero de telefono', value:'phoneNumber'},
+          {text:'Email', value:'email'},
           {text:'Estado', value:'condition'},
           { text: 'Actions', value: 'action', sortable: false }
         ],
-        products:[],
-        product:'',        
-        search:'',
-        categories:[],
-        laboratories:[],
-        dialogNewProduct:false,
+        users:[],
+        roles:[],
+        user:'',        
+        search:'',        
+        dialogNewUser:false,
         dialogEdit:false,
         adModal:0,  //activar o desactivar el modal      
         adAction:0,
@@ -152,19 +145,18 @@
       }
     },
     created () {
-      this.listProducts()
-      this.fetchCategories()
-      this.fetchLaboratories()
+      this.listUsers() 
+      this.fetchRoles()    
     },   
     methods: {
-      listProducts() {
+      listUsers() {
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.get('api/product/list',headers)
+        axios.get('api/user/list',headers)
         .then(function (response) {
           // handle success
-          me.products = response.data                                                    
+          me.users = response.data                                                    
           })
         .catch(function (error) {
           // handle error          
@@ -173,15 +165,15 @@
 						me.$store.dispatch('exit')
           }      
         })
-      },
-      fetchCategories(){
+      },    
+      fetchRoles(){
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.get('api/category/list',headers)
+        axios.get('api/role/list',headers)
         .then(function (response) {
           // handle success
-          me.categories = response.data   
+          me.roles = response.data   
           // console.log(response.data )                                               
           })
         .catch(function (error) {
@@ -191,44 +183,27 @@
 						me.$store.dispatch('exit')
           }        
         })
-      },    
-      fetchLaboratories(){
+      },        
+      addNewUser(user){   
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.get('api/laboratory/list',headers)
-        .then(function (response) {
-          // handle success
-          me.laboratories = response.data                                                    
-          })
-        .catch(function (error) {
-          // handle error          
-          console.log(error);  
-          if (error.response.status === 401) {						
-						me.$store.dispatch('exit')
-          }       
-        })
-      },
-      addNewProduct(product){   
-        let me=this;                    
-        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
-        let headers = {headers:AuthorizationHeader}
-        axios.post('api/product/Create/',
-          {
-            'IdCategory':product.idCategory,
-            'IdLaboratory':product.idLaboratory,
-            'ProductName':product.productName,
-            'Stock':product.stock,
-            'Indicative':product.indicative,            
-            'BarCode':product.barCode,
-            'Price':product.price,
-            'Condition':product.condition
-          },
-          headers)
+        axios.post('api/user/create/',
+          {            
+            'IdRole':user.idRole,
+            'UserName':user.userName,
+            'DocumentType':user.documentType,            
+            'DocumentNumber':user.documentNumber,
+            'Address':user.address,
+            'PhoneNumber':user.phoneNumber,
+            'Email':user.email,
+            'Password':user.password,
+            'State':user.condition
+          }, headers)
         .then(function (response) {
           // handle success
           console.log('success') 
-          me.listProducts()
+          me.listUsers()
           me.closeDialog()                                                    
           })
         .catch(function (error) {
@@ -240,31 +215,34 @@
         })
       },
       //get by id
-      showProductforEdit(item){                    
-        this.product = item       
+      showUserForEdit(item){                    
+        this.user = item       
+        console.log(item)
         this.dialogEdit = true      
       },
-      updateProduct(item){
-        this.product = item.product
+      updateUser(item){
+        this.user = item.user
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}              
-        axios.put('api/product/update',
+        axios.put('api/user/update',
         {
-          'IdProduct':me.product.idProduct,
-          'IdCategory':me.product.idCategory,
-          'IdLaboratory':me.product.idLaboratory,
-          'ProductName':me.product.productName,
-          'Stock':me.product.stock,
-          'Indicative':me.product.indicative,      
-          'Barcode':me.product.barCode,
-          'Price':parseFloat(me.product.price)       
+          'IdUser':me.user.idUser,
+          'IdRole':me.user.idRole,
+          'UserName':me.user.userName,      
+          'DocumentType':me.user.documentType,            
+          'DocumentNumber':me.user.documentNumber,
+          'Address':me.user.address,
+          'PhoneNumber':me.user.phoneNumber,
+          'Email':me.user.email,
+          'Password':'',
+          'Act_Password':false
         },headers)
         .then(function (response) {
           // handle success
           console.log('Update Successful')       
           me.closeDialog()     
-          me.listProducts()                                                                      
+          me.listUsers()                                                                      
         })
         .catch(function (error) {
           // handle error          
@@ -274,10 +252,10 @@
           }       
         })
       },
-      activateDeactivateShowProduct(action, item){
+      activateDeactivateShowUser(action, item){
         this.adModal = 1 // se muestra el modal de confirmacion
-        this.adName = item.productName
-        this.adId =  item.idProduct      
+        this.adName = item.userName
+        this.adId =  item.idUser      
 
         if(action === 1)
         {
@@ -295,15 +273,14 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.put('api/product/Activate/'+ this.adId, {}, headers)
+        axios.put('api/user/Activate/'+ this.adId, {}, headers)
         .then(function (response) {
-          // handle success
-          console.log('success') 
+          // handle success     
           me.adModal = 0
           me.adAction = 0
           me.adName = ""
           me.adId = ""
-          me.listProducts()                                                                  
+          me.listUsers()                                                                  
           })
         .catch(function (error) {
           // handle error          
@@ -317,15 +294,14 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
-        axios.put('api/product/Deactivate/'+ this.adId, {}, headers)
+        axios.put('api/user/Deactivate/'+ this.adId, {}, headers)
         .then(function (response) {
-          // handle success
-          console.log('success') 
+          // handle success         
           me.adModal = 0
           me.adAction = 0
           me.adName = ""
           me.adId = ""
-          me.listProducts()                                                                  
+          me.listUsers()                                                                 
           })
         .catch(function (error) {
           // handle error          
@@ -340,14 +316,8 @@
       },
       closeDialog(switchBool){
         this.dialogEdit = switchBool
-        this.dialogNewProduct = switchBool
-      },
-      // colorear el stock deacuerdo a las unidades
-      getColor(stock){
-        if (stock > 30) return 'green'
-        else if (stock > 10) return 'orange'
-        else return 'red'
-      }
+        this.dialogNewUser = switchBool
+      }      
     },
   }
 </script>

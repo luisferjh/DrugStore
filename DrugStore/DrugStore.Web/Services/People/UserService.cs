@@ -29,10 +29,12 @@ namespace DrugStore.Web.Services.People
         public async Task<IEnumerable<UserViewModel>> List()
         {            
             return await _context.Users
+                .Include(r => r.Role)                               
                 .Select(c => new UserViewModel
                 {
                     IdUser = c.IdUser,
                     IdRole = c.IdRole,
+                    role = c.Role.RoleName,
                     UserName = c.UserName,
                     DocumentType = c.DocumentType,
                     DocumentNumber = c.DocumentNumber,
@@ -40,8 +42,8 @@ namespace DrugStore.Web.Services.People
                     PhoneNumber = c.PhoneNumber,
                     CreatedDate = EF.Property<DateTime>(c, "DateOn"),                
                     Email = c.Email,
-                    Condition = c.Condition,
-             }).ToListAsync();
+                    Condition = c.Condition
+                }).ToListAsync();
         }
 
         public async Task<UserViewModel> GetUser(int id)
@@ -188,7 +190,7 @@ namespace DrugStore.Web.Services.People
             user.PhoneNumber = UserModel.PhoneNumber;
             user.Email = UserModel.Email;
 
-            if (UserModel.act_Password == true)
+            if (UserModel.Act_Password == true)
             {
                 CreatePassword(UserModel.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 user.PasswordHash = passwordHash;
