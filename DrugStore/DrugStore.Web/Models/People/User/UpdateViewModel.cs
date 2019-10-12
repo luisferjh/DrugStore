@@ -27,7 +27,7 @@ namespace DrugStore.Web.Models.People.User
 
         [Required(ErrorMessage = "Please enter Email")]
         [DataType(DataType.EmailAddress)]
-        [StringLength(70, ErrorMessage = "Email must not have more than 70 characters.")]
+        [StringLength(70, ErrorMessage = "s must not have more than 70 characters.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter Password")]

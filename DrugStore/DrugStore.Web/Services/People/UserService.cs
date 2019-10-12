@@ -65,9 +65,13 @@ namespace DrugStore.Web.Services.People
                 PhoneNumber = user.PhoneNumber,
                 CreatedDate = _context.Entry(user).Property<DateTime>("DateOn").CurrentValue,
                 Email = user.Email,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt  = user.PasswordSalt,
                 Condition = user.Condition,
             };
         }
+
+      
 
         public async Task<UserProfileViewModel> UserProfileNav(int id)
         {
@@ -198,7 +202,23 @@ namespace DrugStore.Web.Services.People
             }
 
             await _context.SaveChangesAsync();
-        }  
+        }
+
+        public async Task ChangePassword(int id, UserPasswordViewModel userPass)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (!(CheckPassword(userPass.OldPassword, user.PasswordHash, user.PasswordSalt)))
+            {
+                throw new Exception("Password Denied");
+            }
+
+            CreatePassword(userPass.NewPassword, out byte[] passwordHash, out byte[] passwordSalt);
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            await _context.SaveChangesAsync();           
+        }
 
         public async Task<bool> UserExists(int id)
         {

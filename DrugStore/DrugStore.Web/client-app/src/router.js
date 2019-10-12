@@ -8,6 +8,7 @@ import User from './views/User.vue'
 import Provider from './views/Provider.vue'
 import Login from './views/Login.vue'
 import Client from './views/Client.vue'
+import Profile from './views/Profile.vue'
 import store from './store'
 
 Vue.use(Router);
@@ -75,7 +76,16 @@ var router = new Router({
       meta:{
         admin:true        
       }
-    },   
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta:{
+        admin:true,
+        seller:true
+      }
+    },      
     {
       path: '/login',
       name: 'login',

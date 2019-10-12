@@ -143,18 +143,33 @@
             <v-icon v-text="'group_work'"></v-icon>
           </v-list-item-action>  
         </v-list-item>
-                  
-      </v-list-group>
 
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>account_box</v-icon>
-          </v-list-item-icon>
+         <v-list-item>
+          <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>         
           <v-list-item-content>
-            <v-list-item-title>Mi Cuenta</v-list-item-title>
+            <v-list-item-title v-text="'Mi Cuenta'"></v-list-item-title>
           </v-list-item-content>
+            <v-list-item-action>
+            <v-icon v-text="'account_box'"></v-icon>
+          </v-list-item-action>
         </v-list-item>
 
+          <v-list-item :to="{name:'profile'}">
+          <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>         
+          <v-list-item-content>
+            <v-list-item-title v-text="'Seguridad'"></v-list-item-title>
+          </v-list-item-content>
+            <v-list-item-action>
+            <v-icon v-text="'security'"></v-icon>
+          </v-list-item-action>
+        </v-list-item>
+                  
+      </v-list-group>
+       
         <v-list-group
           prepend-icon="dashboard"        
         >

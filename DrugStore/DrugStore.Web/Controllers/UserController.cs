@@ -173,6 +173,39 @@ namespace DrugStore.Web.Controllers
 
             return Ok();
         }
-       
+
+        // PUT: api/User/UpdatePassword/id
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdatePassword([FromRoute] int id, [FromBody] UserPasswordViewModel userPass)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+                    
+            try
+            {
+                await _userService.ChangePassword(id, userPass);
+            }            
+            catch (DbUpdateConcurrencyException ex)
+            {
+                return NotFound(ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(ex);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+            return Ok();
+        }
+
     }
 }
