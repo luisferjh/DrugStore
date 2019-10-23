@@ -70,7 +70,7 @@
       >
         <template v-slot:activator>         
           <v-list-item-content>
-            <v-list-item-title>Ventas</v-list-item-title>
+            <v-list-item-title>Gestion de Ventas</v-list-item-title>
           </v-list-item-content>                    
         </template>       
      
@@ -86,6 +86,17 @@
           </v-list-item-action>  
         </v-list-item>     
                   
+        <v-list-item :to="{name:'sale'}">
+           <v-list-item-action>
+            <v-icon></v-icon>
+          </v-list-item-action>  
+          <v-list-item-content>
+            <v-list-item-title v-text="'Ventas'"></v-list-item-title>                   
+          </v-list-item-content>
+          <v-list-item-action>
+            <v-icon v-text="'shop'"></v-icon>
+          </v-list-item-action>  
+        </v-list-item>               
       </v-list-group>      
 
       <v-list-group

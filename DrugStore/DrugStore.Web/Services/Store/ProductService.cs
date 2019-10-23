@@ -41,6 +41,35 @@ namespace DrugStore.Web.Services.Store
             };
         }
 
+        public async Task<ProductViewModel> GetProductByBarCode(string barCode)
+        {
+            var product = await _context.Products
+                .Include(c => c.Category)
+                .Include(l => l.Laboratory)
+                .Where(c => c.Condition == true)
+                .SingleOrDefaultAsync(c => c.BarCode == barCode);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return new ProductViewModel
+            {
+                IdProduct = product.IdProduct,
+                IdCategory = product.IdCategory,
+                Category = product.Category.Name,
+                IdLaboratory = product.IdLaboratory,
+                Laboratory = product.Laboratory.LaboratoryName,
+                ProductName = product.ProductName,
+                BarCode = product.BarCode,
+                Indicative = product.Indicative,
+                Stock = product.Stock,
+                Price = product.Price,
+                Condition = product.Condition
+            };
+        }
+
         public async Task<IEnumerable<ProductViewModel>> List()
         {
             var product = await _context.Products

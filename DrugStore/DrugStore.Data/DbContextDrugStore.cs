@@ -264,7 +264,8 @@ namespace DrugStore.Data
                     Stock = 5,
                     Price = 700,
                     Condition = true
-                });
+                }
+            );
 
 
             //Provider
@@ -315,8 +316,7 @@ namespace DrugStore.Data
                     DocumentNumber = "1065852654",
                     PhoneNumber = "3011235689",
                     Condition = true
-                });
-                             
+                });           
         }
 
         public override int SaveChanges()

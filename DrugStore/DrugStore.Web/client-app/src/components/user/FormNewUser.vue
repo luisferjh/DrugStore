@@ -38,12 +38,12 @@
           
           <v-col cols="12" md="12">
             <v-text-field 
-            label="Contraseña*" 
-            v-model="password" 
-            :append-icon="show1 ? 'visibility' : 'visibility_off'" 
-            :type="show1 ? 'text' : 'password'"
-            @click:append="show1 = !show1"
-            required
+              label="Contraseña*" 
+              v-model="password" 
+              :append-icon="show1 ? 'visibility' : 'visibility_off'" 
+              :type="show1 ? 'text' : 'password'"
+              @click:append="show1 = !show1"
+              required
             >
             </v-text-field>
           </v-col>  

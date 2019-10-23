@@ -129,6 +129,7 @@
           {text:'Direccion', value:'address'},
           {text:'Numero de telefono', value:'phoneNumber'},
           {text:'Email', value:'email'},
+          {text:'Fecha de Creacion', value:'createdDate'},
           {text:'Estado', value:'condition'},
           { text: 'Actions', value: 'action', sortable: false }
         ],
@@ -185,7 +186,8 @@
         })
       },        
       addNewUser(user){   
-        let me=this;                    
+        let me=this;  
+        console.log(user)                  
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
         axios.post('api/user/create/',

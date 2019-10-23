@@ -46,6 +46,20 @@ namespace DrugStore.Web.Controllers
             return Ok(product);
         }
 
+        // GET: api/GetByBarCode/barcode
+        [HttpGet("[action]/{barcode}")]
+        public async Task<IActionResult> GetByBarCode([FromRoute] string barCode)
+        {
+            var product = await _productService.GetProductByBarCode(barCode);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+
         // POST: api/Product
         [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] CreateViewModel product)

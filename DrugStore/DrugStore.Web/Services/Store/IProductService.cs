@@ -12,6 +12,7 @@ namespace DrugStore.Web.Services.Store
     {
         Task<IEnumerable<ProductViewModel>> List();
         Task<ProductViewModel> GetProduct(int id);
+        Task<ProductViewModel> GetProductByBarCode(string barCode);
         Task AddProduct(CreateViewModel model);
         Task UpdateProduct(UpdateViewModel model);
         Task DeleteProduct(Product Pproduct);

@@ -6,6 +6,7 @@ import Laboratory from './views/Laboratory.vue'
 import Order from './views/Order.vue'
 import User from './views/User.vue'
 import Provider from './views/Provider.vue'
+import Sale from './views/Sale.vue'
 import Login from './views/Login.vue'
 import Client from './views/Client.vue'
 import Profile from './views/Profile.vue'
@@ -67,6 +68,15 @@ var router = new Router({
       component: User,
       meta:{
         admin:true      
+      }
+    },
+    {
+      path: '/sale',
+      name: 'sale',
+      component: Sale,
+      meta:{
+        admin:true,
+        seller:true        
       }
     },
     {

@@ -69,9 +69,7 @@ namespace DrugStore.Web.Services.People
                 PasswordSalt  = user.PasswordSalt,
                 Condition = user.Condition,
             };
-        }
-
-      
+        }      
 
         public async Task<UserProfileViewModel> UserProfileNav(int id)
         {
@@ -102,7 +100,7 @@ namespace DrugStore.Web.Services.People
                 DocumentType = UserModel.DocumentType,
                 DocumentNumber = UserModel.DocumentNumber,
                 Address = UserModel.Address,
-                PhoneNumber = UserModel.PhoneNumber,
+                PhoneNumber = UserModel.PhoneNumber,                
                 Email = UserModel.Email,
                 PasswordHash = PasswordHash,
                 PasswordSalt = PasswordSalt,
@@ -110,6 +108,8 @@ namespace DrugStore.Web.Services.People
             };
 
             await _context.Users.AddAsync(user);
+
+            _context.Entry(user).Property("DateOn").CurrentValue = DateTime.Now;
 
             _context.SaveChanges();
         }

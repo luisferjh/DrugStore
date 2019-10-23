@@ -5,12 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrugStore.Web.Models.Sales.Sale;
 using DrugStore.Web.Services.Sales;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrugStore.Web.Controllers
 {
+    [Authorize(Roles = "Admin,Seller")]
     [Route("api/[controller]")]
     [ApiController]
     public class SaleController : ControllerBase
@@ -21,7 +23,7 @@ namespace DrugStore.Web.Controllers
             _saleService = saleService;
         }
 
-        // GET: api/Sale/5
+        // GET: api/Sale/list
         [HttpGet("[action]")]
         public async Task<IEnumerable> List()
         {
@@ -29,7 +31,7 @@ namespace DrugStore.Web.Controllers
             return Sales;
         }
 
-        // GET: api/Sale
+        // GET: api/Sale/Get/id
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
@@ -42,7 +44,7 @@ namespace DrugStore.Web.Controllers
             return Ok(sale);
         }
        
-        // POST: api/Sale
+        // POST: api/Sale/Create
         [HttpPost("action")]
         public async Task<IActionResult> Create([FromBody] CreateViewModel saleModel)
         {

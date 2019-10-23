@@ -19,7 +19,8 @@ namespace DrugStore.Web.Services.Sales
         }
 
         public async Task<IEnumerable<SaleViewModel>> List()
-        {
+        {            
+
             return await _context.Sales
                 .Include(u => u.IdUser)
                 .Include(c => c.IdClient)
@@ -29,12 +30,14 @@ namespace DrugStore.Web.Services.Sales
                 {
                     IdSale = s.IdSale,
                     IdUser = s.IdUser,
+                    UserName = s.User.UserName,
                     IdClient = s.IdClient,
                     ClientName = s.Client.Name + " " + s.Client.LastName,
                     TypeSale = s.TypeSale,
                     VoucherSeries = s.VoucherSeries,
                     VoucherNumber = s.VoucherNumber,
                     SaleDate = EF.Property<DateTime>(s, "DateOn"),
+                    SaleDateUpdate = EF.Property<DateTime>(s, "LastUpdated"),
                     TotalPrice = s.TotalPrice,
                     State = s.State
                 }).ToListAsync(); 
@@ -44,12 +47,16 @@ namespace DrugStore.Web.Services.Sales
         public async Task<SaleViewModel> GetSale(int id)
         {
 
-            var sale = await _context.Sales.FindAsync(id);
+            var sale = await _context.Sales
+                .Include(u => u.User)
+                .Include(c => c.Client)
+                .FirstOrDefaultAsync(v => v.IdSale == id);
+
             if (sale == null)
             {
                 return null;
             }
-
+          
             return new SaleViewModel
             {
                 IdSale = sale.IdSale,
@@ -59,8 +66,9 @@ namespace DrugStore.Web.Services.Sales
                 ClientName = sale.Client.Name + " " + sale.Client.LastName,
                 TypeSale = sale.TypeSale,
                 VoucherSeries = sale.VoucherSeries,
-                VoucherNumber = sale.VoucherNumber,
-                SaleDate = _context.Entry(sale).Property<DateTime>("DateOn").CurrentValue,
+                VoucherNumber = sale.VoucherNumber,                
+                SaleDate = _context.Entry(sale).Property<DateTime>("DateOn").CurrentValue.Date,
+                SaleDateUpdate = _context.Entry(sale).Property<DateTime>("LastUpdated").CurrentValue.Date,
                 TotalPrice = sale.TotalPrice,
                 State = sale.State
             };
