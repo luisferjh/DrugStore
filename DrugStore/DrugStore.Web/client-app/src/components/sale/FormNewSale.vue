@@ -40,16 +40,28 @@
               :items="details"
               :search="search"
               class="elevation-1"         
-            >            
+            >     
+              <template v-slot:item.amount="{item}">                
+                <v-text-field v-model="item.amount"></v-text-field>                    
+              </template>
+
+              <template v-slot:item.discount="{item}">                
+                <v-text-field v-model="item.discount"></v-text-field>                    
+              </template>
+
+              <template v-slot:item.unitPrice="{item}">                
+                <v-text-field v-model="item.unitPrice"></v-text-field>                    
+              </template>
+
               <template v-slot:item.subtotal="{item}">                
-                {{item.amount * item.unitPrice}}                    
+                {{(item.amount * item.unitPrice) - item.discount * item.amount }}                    
               </template>
                                         
               <template v-slot:item.borrar="{ item }">         
                 <v-icon
                   small
                   class="mr-2"                  
-                  @click=""
+                  @click="deleteDetail(item)"
                 >
                   delete
                 </v-icon>                                                                                
@@ -91,6 +103,7 @@
          headersDataGridDetails:[        
           {text:'Producto', value:'product', sortable: false},
           {text:'Cantidad', value:'amount', sortable: false},
+          {text:'Descuento', value:'discount', sortable: false},
           {text:'Costo Unitario', value:'unitCost', sortable: false},
           {text:'Precio', value:'unitPrice', sortable: false},
           {text:'Subtotal', value:'subtotal', sortable: false},
@@ -98,13 +111,10 @@
         ],
         typeSales:['FACTURA','BOLETA','TICKET'],
         typeSale:'',
-        details:[
-          {idProduct:1, product:'Diclofenaco', amount:5, unitCost:1200,unitPrice:1500},
-          {idProduct:1, product:'Cetirizina', amount:2, unitCost:2100,unitPrice:2500}
-        ],
+        details:[],
         voucherSeries:'',
         voucherNumber:'',
-        disccount:'',        
+        discount:'',        
         nameProduct:'',
         search:'',               
         stock:0,        
@@ -125,7 +135,7 @@
         axios.get('api/product/getByBarCode/'+this.barCode,headers)
         .then(function (response) {
           // handle success
-          console.log(response)                                                 
+          me.addDetail(response.data)                                                     
           })
         .catch(function (error) {
           // handle error          
@@ -134,6 +144,34 @@
 						me.$store.dispatch('exit')
           }      
         })
+      },
+      addDetail(data = []){
+        if (this.findInDetail(data['idProduct'])) 
+        {
+          alert("el producto ya ha sido agregado")
+        } else {
+          console.log(data)
+          this.details.push({
+            idProduct:data['idProduct'],
+            product:data['productName'],
+            amount:1,
+            discount:0,
+            unitCost:0,
+            unitPrice:0
+          })
+        }
+        
+      },
+      findInDetail(id){
+        for (let i = 0; i < this.details.length; i++) {
+          if(this.details[i].idProduct === id ){
+            return true
+          }          
+        }               
+        return false
+      },
+      deleteDetail(item){    
+        this.details.splice(this.details.indexOf(item),1)              
       },
       save() {
         this.$emit('save',{ 
