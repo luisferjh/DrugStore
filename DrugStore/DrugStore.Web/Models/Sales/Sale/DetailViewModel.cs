@@ -16,8 +16,8 @@ namespace DrugStore.Web.Models.Sales.Sale
         [Required]
         public Decimal Discount { get; set; }
         [Required]
-        public Decimal UnitCost { get; set; }
+        public decimal UnitPrice { get; set; }
         [Required]
-        public Decimal UnitPrice { get; set; }
+        public Decimal SalePrice { get; set; }
     }
 }

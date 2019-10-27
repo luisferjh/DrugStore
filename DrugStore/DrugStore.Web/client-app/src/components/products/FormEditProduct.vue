@@ -43,7 +43,11 @@
               </v-col>
 
               <v-col cols="12">
-                <v-text-field label="Precio*" v-model="productObj.price" required></v-text-field>
+                <v-text-field label="Precio Unitario*" v-model="productObj.unitPrice" required></v-text-field>
+              </v-col>    
+
+              <v-col cols="12">
+                <v-text-field label="Precio*" v-model="productObj.salePrice" required></v-text-field>
               </v-col>             
             </v-row>
           </v-container>

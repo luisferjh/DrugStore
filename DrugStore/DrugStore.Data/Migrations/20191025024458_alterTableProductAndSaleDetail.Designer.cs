@@ -4,14 +4,16 @@ using DrugStore.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DrugStore.Data.Migrations
 {
     [DbContext(typeof(DbContextDrugStore))]
-    partial class DbContextDrugStoreModelSnapshot : ModelSnapshot
+    [Migration("20191025024458_alterTableProductAndSaleDetail")]
+    partial class alterTableProductAndSaleDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,8 +157,6 @@ namespace DrugStore.Data.Migrations
                     b.Property<int>("IdProduct");
 
                     b.Property<int>("IdSale");
-
-                    b.Property<decimal>("SalePrice");
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(11,2)");

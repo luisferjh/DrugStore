@@ -134,7 +134,8 @@
           {text:'Categoria', value:'category'},
           {text:'Laboratorio', value:'laboratory'},
           {text:'Stock', value:'stock'},
-          {text:'Precio', value:'price'},
+          {text:'Precio Unit', value:'unitPrice'},
+          {text:'Precio', value:'salePrice'},
           {text:'Estado', value:'condition'},
           { text: 'Actions', value: 'action', sortable: false }
         ],
@@ -221,7 +222,8 @@
             'Stock':product.stock,
             'Indicative':product.indicative,            
             'BarCode':product.barCode,
-            'Price':product.price,
+            'UnitPrice':product.unitPrice,
+            'SalePrice':product.salePrice,
             'Condition':product.condition
           },
           headers)
@@ -258,7 +260,8 @@
           'Stock':me.product.stock,
           'Indicative':me.product.indicative,      
           'Barcode':me.product.barCode,
-          'Price':parseFloat(me.product.price)       
+          'UnitPrice':parseFloat(me.prodcut.unitPrice),
+          'SalePrice':parseFloat(me.product.salePrice)       
         },headers)
         .then(function (response) {
           // handle success

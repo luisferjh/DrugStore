@@ -106,9 +106,9 @@ namespace DrugStore.Web.Services.Sales
                     IdSale = id,
                     IdProduct = det.IdProduct,
                     Amount = det.Amount,
-                    Discount = det.Discount,
-                    UnitCost = det.UnitCost,
-                    UnitPrice = det.UnitPrice
+                    Discount = det.Discount,                          
+                    UnitPrice = det.UnitPrice,
+                    SalePrice = det.SalePrice                   
                 };
                 _context.saleDetails.Add(detail);
             }

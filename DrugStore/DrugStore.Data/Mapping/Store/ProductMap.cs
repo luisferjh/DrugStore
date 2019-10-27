@@ -15,8 +15,9 @@ namespace DrugStore.Data.Mapping.Store
             builder.Property(x => x.ProductName).HasColumnType("varchar(50)").IsRequired();
             builder.Property(x => x.BarCode).HasColumnType("varchar(50)");
             builder.Property(x => x.Indicative).HasColumnType("varchar(250)");
-            builder.Property(x => x.Stock).IsRequired();  
-            builder.Property(x => x.Price).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.Stock).IsRequired();
+            builder.Property(x => x.UnitPrice).HasColumnType("decimal(11,2)").IsRequired();
+            builder.Property(x => x.SalePrice).HasColumnType("decimal(11,2)").IsRequired();
          
             // Relations
             builder.ToTable("Product")

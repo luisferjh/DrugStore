@@ -118,7 +118,8 @@ namespace DrugStore.Data
                     BarCode = "sdfsdf",
                     Indicative = "tabletas, 3 al dia",
                     Stock = 100,
-                    Price = 1000,
+                    UnitPrice = 800,
+                    SalePrice = 1000,
                     Condition = true
                 },
                 new Product
@@ -130,7 +131,8 @@ namespace DrugStore.Data
                     BarCode = "sdfsdf",
                     Indicative = "tabletas",
                     Stock = 10,
-                    Price = 4000,
+                    UnitPrice = 3500,
+                    SalePrice = 4000,
                     Condition = true
                 }, 
                 new Product
@@ -142,7 +144,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Liquido",
                     Stock = 10,
-                    Price = 5000,
+                    UnitPrice = 4500,
+                    SalePrice = 5000,
                     Condition = true
                 },
                 new Product
@@ -154,7 +157,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 45,
-                    Price = 3000,
+                    UnitPrice = 2400,
+                    SalePrice = 3000,
                     Condition = true
                 }, 
                 new Product
@@ -166,7 +170,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 15,
-                    Price = 2500,
+                    UnitPrice = 1970,
+                    SalePrice = 2500,
                     Condition = false
                 },
                 new Product
@@ -178,7 +183,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Polvo",
                     Stock = 5,
-                    Price = 6000,
+                    UnitPrice = 5320,
+                    SalePrice = 6000,
                     Condition = true
                 },
                 new Product
@@ -190,7 +196,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 12,
-                    Price = 3000,
+                    UnitPrice = 2600,
+                    SalePrice = 3000,
                     Condition = true
                 },
                 new Product
@@ -202,7 +209,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 25,
-                    Price = 1500,
+                    UnitPrice = 1250,
+                    SalePrice = 1500,
                     Condition = true
                 }, 
                 new Product
@@ -214,7 +222,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Ampolla",
                     Stock = 10,
-                    Price = 1750,
+                    UnitPrice = 1500,
+                    SalePrice = 1750,
                     Condition = true
                 }, 
                 new Product
@@ -226,7 +235,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 10,
-                    Price = 1800,
+                    UnitPrice = 1460,
+                    SalePrice = 1800,
                     Condition = true
                 },
                 new Product
@@ -238,7 +248,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 10,
-                    Price = 1300,
+                    UnitPrice = 1100,
+                    SalePrice = 1300,
                     Condition = true
                 },
                 new Product
@@ -250,7 +261,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 0,
-                    Price = 2300,
+                    UnitPrice = 1910,
+                    SalePrice = 2300,
                     Condition = false
                 },                
                 new Product
@@ -262,7 +274,8 @@ namespace DrugStore.Data
                     BarCode = "",
                     Indicative = "Tableta",
                     Stock = 5,
-                    Price = 700,
+                    UnitPrice = 380,
+                    SalePrice = 700,
                     Condition = true
                 }
             );

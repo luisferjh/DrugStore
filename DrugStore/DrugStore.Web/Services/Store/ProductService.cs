@@ -36,7 +36,8 @@ namespace DrugStore.Web.Services.Store
                 BarCode = product.BarCode,
                 Indicative = product.Indicative,
                 Stock = product.Stock,
-                Price = product.Price,
+                UnitPrice = product.UnitPrice,
+                SalePrice = product.SalePrice,
                 Condition = product.Condition
             };
         }
@@ -65,7 +66,8 @@ namespace DrugStore.Web.Services.Store
                 BarCode = product.BarCode,
                 Indicative = product.Indicative,
                 Stock = product.Stock,
-                Price = product.Price,
+                UnitPrice = product.UnitPrice,
+                SalePrice = product.SalePrice,
                 Condition = product.Condition
             };
         }
@@ -88,7 +90,34 @@ namespace DrugStore.Web.Services.Store
                 BarCode = p.BarCode,
                 Indicative = p.Indicative,
                 Stock = p.Stock,
-                Price = p.Price,
+                UnitPrice = p.UnitPrice,
+                SalePrice = p.SalePrice,
+                Condition = p.Condition
+            });
+        }
+
+        public async Task<IEnumerable<ProductViewModel>> ListInSale(string text)
+        {
+            var product = await _context.Products
+                .Include(c => c.Category)
+                .Include(l => l.Laboratory)
+                .Where(c => c.ProductName.Contains(text))
+                .Where(c => c.Condition == true)
+                .ToListAsync();
+
+            return product.Select(p => new ProductViewModel
+            {
+                IdProduct = p.IdProduct,
+                IdCategory = p.IdCategory,
+                Category = p.Category.Name,
+                IdLaboratory = p.IdLaboratory,
+                Laboratory = p.Laboratory.LaboratoryName,
+                ProductName = p.ProductName,
+                BarCode = p.BarCode,
+                Indicative = p.Indicative,
+                Stock = p.Stock,
+                UnitPrice = p.UnitPrice,
+                SalePrice = p.SalePrice,
                 Condition = p.Condition
             });
         }
@@ -103,7 +132,8 @@ namespace DrugStore.Web.Services.Store
                 BarCode = model.BarCode,
                 Indicative = model.Indicative,
                 Stock = model.Stock,
-                Price = model.Price,
+                UnitPrice = model.UnitPrice,
+                SalePrice = model.SalePrice,
                 Condition = model.Condition
             };
 
@@ -123,7 +153,8 @@ namespace DrugStore.Web.Services.Store
             product.BarCode = model.BarCode;
             product.Indicative = model.Indicative;
             product.Stock = model.Stock;
-            product.Price = model.Price;       
+            product.UnitPrice = model.UnitPrice;
+            product.SalePrice = model.SalePrice;       
 
             await _context.SaveChangesAsync();
 

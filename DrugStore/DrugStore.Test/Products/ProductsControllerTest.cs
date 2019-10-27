@@ -187,7 +187,8 @@ namespace DrugStore.Test.Products
             model.BarCode = productValue.BarCode;
             model.Indicative = "2 veces al dia despues de cada comida";
             model.Stock = productValue.Stock;
-            model.Price = productValue.Price ;     
+            model.UnitPrice = productValue.UnitPrice;
+            model.SalePrice = productValue.SalePrice ;     
 
             var productUpdateOk = await controller.Update(model);
 
@@ -215,8 +216,8 @@ namespace DrugStore.Test.Products
             model.ProductName = "Axoximocilina";
             model.BarCode = "";
             model.Indicative = "suministrar dos dosis minimas";
-            model.Stock = 25;
-            model.Price = 12.00m;       
+            model.Stock = 25;      
+            model.SalePrice = 12.00m;       
 
             // Act         
             var productUpdateOk = await controller.Update(model);
@@ -241,7 +242,7 @@ namespace DrugStore.Test.Products
             model.BarCode = "";
             model.Indicative = "suministrar dos dosis minimas";
             model.Stock = 25;
-            model.Price = 12.00m;
+            model.SalePrice = 12.00m;
 
             // Act         
             var productUpdateNotFound = await controller.Update(model);

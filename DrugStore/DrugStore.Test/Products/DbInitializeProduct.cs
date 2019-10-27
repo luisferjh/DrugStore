@@ -70,8 +70,9 @@ namespace DrugStore.Test.Products
                     ProductName = "Acetaminofen",
                     BarCode = "sdfsdf",
                     Indicative = "tabletas, 3 al dia",
-                    Stock = 100,                               
-                    Price = 1000,
+                    Stock = 100,
+                    UnitPrice = 800,
+                    SalePrice = 1000,
                     Condition = true
                 },
                 new Product()
@@ -82,7 +83,8 @@ namespace DrugStore.Test.Products
                     BarCode = "sdfsdf",
                     Indicative = "tabletas",
                     Stock = 10,
-                    Price = 4000,
+                    UnitPrice = 3000,
+                    SalePrice = 4000,
                     Condition = true
                 }           
             );

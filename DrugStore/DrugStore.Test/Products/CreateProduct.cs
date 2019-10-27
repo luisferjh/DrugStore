@@ -18,7 +18,8 @@ namespace DrugStore.Test.Products
                 BarCode = "",
                 Indicative = "Liquido",
                 Stock = 10,
-                Price = 5000,
+                UnitPrice = 4100,
+                SalePrice = 5000,
                 Condition = true
             };
         }
@@ -32,7 +33,8 @@ namespace DrugStore.Test.Products
                 BarCode = "",
                 Indicative = "Liquido",
                 Stock = 10,
-                Price = 5000,
+                UnitPrice = 4100,
+                SalePrice = 5000,
                 Condition = true
             };
         }

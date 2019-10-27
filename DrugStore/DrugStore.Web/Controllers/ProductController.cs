@@ -32,6 +32,14 @@ namespace DrugStore.Web.Controllers
             return products;
         }
 
+        // GET: api/Product/listInSale/text
+        [HttpGet("[action]/{text}")]
+        public async Task<IEnumerable> ListInSale([FromRoute] string text)
+        {
+            var products = await _productService.ListInSale(text);
+            return products;
+        }
+
         // GET: api/Product/id
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] int id)

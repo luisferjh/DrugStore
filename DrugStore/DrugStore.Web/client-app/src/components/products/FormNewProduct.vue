@@ -66,10 +66,14 @@
           </v-col>
 
           <v-col cols="12">
-            <v-text-field label="Precio*" v-model="price" required></v-text-field>
+            <v-text-field label="Precio Unitario*" v-model="unitPrice" required></v-text-field>
           </v-col>
+
           <v-col cols="12">
-            
+            <v-text-field label="Precio*" v-model="salePrice" required></v-text-field>
+          </v-col>
+
+          <v-col cols="12">            
             <v-select
               v-model="estado"
               :items="[{'estado':'Activo', 'value':true}, {'estado':'Inactivo', 'value':false}]"   
@@ -113,7 +117,8 @@
         dueDate:'',
         barCode:'',
         indicative:'',
-        price:'',
+        unitPrice:'',
+        salePrice:'',
         estado:'',
         dueDate: new Date().toISOString().substr(0, 10),
         menu1: false
@@ -131,7 +136,8 @@
           'stock':this.stock,
           'indicative':this.indicative,                        
           'barCode':this.barCode,
-          'price':parseFloat(this.price),
+          'unitPrice':parseFloat(this.unitPrice),
+          'salePrice':parseFloat(this.salePrice),
           'condition':this.estado
         })
       },
