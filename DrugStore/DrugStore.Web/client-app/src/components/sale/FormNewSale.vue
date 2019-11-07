@@ -7,7 +7,9 @@
     <v-card-text>
       <v-container>
         <v-row>
-        
+          <v-col cols="12" sm="4" md="4">
+            <v-text-field label="Tipo de venta*" v-model="typeSale" required></v-text-field>
+          </v-col>
           <v-col cols="12" sm="4" md="4">
             <v-select
               v-model="typeSale"
@@ -19,11 +21,20 @@
           <v-col cols="12" sm="4" md="4">
             <v-text-field label="Serie de comprobante*" v-model="voucherSeries" required></v-text-field>
           </v-col>
-          <v-col cols="12" sm="4" md="4">
+          <v-col cols="12" sm="6" md="6">
             <v-text-field label="Numero de comprobante*" v-model="voucherNumber" required></v-text-field>
           </v-col>              
           
-                    
+          <v-col cols="12" sm="7" md="7">
+            <v-text-field @keyup.enter="searchByPhoneNumber()" v-model="phoneNumber" label="Cliente*"></v-text-field>
+          </v-col>                     
+          
+          <v-col cols="12" sm="5" md="5">   
+            <v-btn class="mx-2" @click.stop="dialogClient = true" fab dark color="teal">
+             <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+            </v-btn>
+          </v-col>
+
           <v-col cols="12" sm="6" md="6">
             <v-text-field @keyup.enter="searchByBarCode()" label="Codigo de barra*" v-model="barCode"></v-text-field>
           </v-col>                     
@@ -33,16 +44,7 @@
               <v-icon dark>mdi-format-list-bulleted-square</v-icon>
             </v-btn>
           </v-col>
-
-           <v-col cols="12" sm="6" md="6">
-            <v-text-field label="Cliente*" v-model="id"></v-text-field>
-          </v-col>                     
-          
-          <v-col cols="12" sm="6" md="6">   
-            <v-btn @click="searchByPhone()" class="mx-2" dark color="teal">
-              Buscar Cliente
-            </v-btn>
-          </v-col>
+       
 
           <!-- dialogo para mostrar los productos para agregar al detalle -->
           <v-dialog
@@ -72,8 +74,7 @@
                   <v-col cols="12" sm="12" md="12">
                     <v-data-table        
                       :headers="headersProducts"
-                      :items="products"
-                      :search="search"
+                      :items="products"                     
                       class="elevation-1"         
                     >     
                       <template v-slot:item.select="{item}"> 
@@ -98,7 +99,86 @@
               </v-card-actions>
             </v-card>           
           </v-dialog>
-                              
+
+             <!-- dialogo para mostrar los clientes para agregar al detalle -->
+          <v-dialog
+            v-model="dialogClient"
+            persistent            
+            max-width="1000px"
+          >            
+            <v-card>
+              <v-card-title>
+                <span>  Seleccione un Cliente </span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field 
+                      append-icon="search" 
+                      class="text-xs-center" 
+                      label="Nombre del Cliente" 
+                      @keyup.enter="listClients()" 
+                      v-model="fullName"
+                    >
+                    </v-text-field>
+                  </v-col>
+
+                  <v-col cols="12" sm="12" md="12">
+                    <v-data-table        
+                      :headers="headersClients"
+                      :items="clientsByName"                     
+                      class="elevation-1"         
+                    >     
+                      <template v-slot:item.select="{item}"> 
+                        <v-btn text small @click="">
+                          <v-icon>add</v-icon>                                              
+                        </v-btn>               
+                      </template>                                                                                       
+                    
+                      <template v-slot:no-data>
+                        <h3>No hay clientes agregados a la lista</h3>
+                      </template>
+                    </v-data-table>                 
+                  </v-col>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn @click="dialogClient = false" color="red" text>
+                  Cerrar
+                </v-btn>
+              </v-card-actions>
+            </v-card>           
+          </v-dialog>
+          
+          <!-- data table para mostrar el cliente en la venta (opcional) -->
+          <v-col cols="12" sm="12" md="12">
+            <v-data-table        
+              :headers="headersClients"
+              :items="clientByPhoneNumber"             
+              class="elevation-1"         
+            >                  
+                                        
+              <template v-slot:item.borrar="{ item }">         
+                <v-icon
+                  small
+                  class="mr-2"                  
+                  @click=""
+                >
+                  delete
+                </v-icon>                                                                                
+              </template>  
+            
+              <template v-slot:no-data>
+                <h3>No hay clientes agregados a la venta</h3>
+              </template>
+            </v-data-table>
+          </v-col>
+
+          
           <v-col cols="12" sm="12" md="12">
             <v-data-table        
               :headers="headersDataGridDetails"
@@ -138,15 +218,15 @@
             </v-data-table>
 
             <v-col>
-              <p class="text-right"> <span class="font-weight-black">Total Unitario: </span> ${{totalUnit = calculateUnitTotal}}</p>
+              <p class="text-left"> <span class="font-weight-black">Total Unitario: </span> ${{totalUnit = calculateUnitTotal}}</p>
             </v-col>
 
             <v-col>
-              <p class="text-right font-weight-black"><strong>Descuento:</strong> ${{totalDiscount = calculateDiscount}}</p>
+              <p class="text-left font-weight-black"><strong>Descuento:</strong> ${{totalDiscount = calculateDiscount}}</p>
             </v-col>
 
             <v-col>
-              <p class="text-right font-weight-bold"><strong>Total Neto:</strong> ${{total = calculateTotal}}</p>
+              <p class="text-left font-weight-bold"><strong>Total Neto:</strong> ${{total = calculateTotal}}</p>
             </v-col>
 
             <v-col cols="12" xs="12" sm="12" md="6">   
@@ -195,24 +275,39 @@
           {text:'Precio Unit', value:'unitPrice'},
           {text:'Precio', value:'salePrice'}         
         ],
+        headersClients:[
+          {text:'Seleccionar', value:'select', sortable: false },
+          {text:'ID', value:'idClient'},
+          {text:'Nombre', value:'name',sortable: false},
+          {text:'Apellidos', value:'lastName',sortable: false},
+          {text:'Tipo de Documento', value:'documentType',sortable: false},
+          {text:'Numero De Documento', value:'documentNumber',sortable: false},
+          {text:'Numero de telefono', value:'phoneNumber',sortable: false},
+          {text:'Borrar', value:'borrar', sortable: false}            
+        ],
         typeSales:['FACTURA','BOLETA','TICKET'],
         typeSale:'',
         details:[],
         products:[],
+        clientsByName:[], //este array es para la busqueda por nombre
+        fullName:'', //nombre completo para desplegar los clientes
+        clientByPhoneNumber:[], //este array guardara el cliente buscado por telefono
         totalDiscount:0,
         totalUnit:0,
         total:0,
-        text:'',
+        text:'',       
         voucherSeries:'',
         voucherNumber:'',
         discount:0,        
         nameProduct:'',
         search:'',               
         stock:0,        
-        barCode:'',     
+        barCode:'',
+        phoneNumber:'',     
         price:'',
         estado:'',               
-        dialogProduct:false
+        dialogProduct:false,
+        dialogClient:false
       }
     },
     created () {
@@ -259,7 +354,52 @@
 						me.$store.dispatch('exit')
           }      
         })
+      },
+      // listar clientes por nombre completo
+      listClients(){      
+        let me=this;                    
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        let splitedName = this.fullName.split(' ')
+        console.log(splitedName)
+        axios.get('api/client/ListInSale/',{
+          params:{
+            'name':splitedName[0],
+            'lastName':splitedName[1]
+          }
+          },headers)
+        .then(function (response) {
+          // handle success        
+          me.clientsByName = response.data                                                    
+          })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);   
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }      
+        })
       }, 
+      // metodo para llarmar al controlador cliente y buscar un cliente por 
+      // numero de telefono y luego agregarlo a la venta
+      searchByPhoneNumber() {
+        let me=this;                    
+        let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
+        let headers = {headers:AuthorizationHeader}
+        axios.get('api/client/getByPhoneNumber/'+this.phoneNumber,headers)
+        .then(function (response) {
+          // handle success
+          console.log(response.data)
+          me.addClientSale(response.data)                                                     
+          })
+        .catch(function (error) {
+          // handle error          
+          console.log(error);   
+          if (error.response.status === 401) {						
+						me.$store.dispatch('exit')
+          }      
+        })
+      },       
       searchByBarCode() {
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
@@ -276,7 +416,25 @@
 						me.$store.dispatch('exit')
           }      
         })
+      },   
+      // metodo para agregar un cliente a la venta (esto es opcional)
+      addClientSale(data = []){      
+        if (this.findInClientSale()) 
+        {
+          alert("ya existe un cliente agregado")
+        } else {         
+          this.clientByPhoneNumber.push({
+            idClient:data['idClient'],
+            name:data['name'],
+            lastName:data['lastName'],
+            documentType:data['documentType'],
+            documentNumber:data['documentNumber'],
+            phoneNumber:data['phoneNumber'],
+           
+          })
+        }        
       },
+      // metodo para agregar productos al detalle  
       addDetail(data = []){
         if (this.findInDetail(data['idProduct'])) 
         {
@@ -291,8 +449,13 @@
             unitPrice:data['unitPrice'],
             salePrice:data['salePrice']
           })
-        }
-        
+        }        
+      },
+      findInClientSale(){        
+        if(this.clientByPhoneNumber.length > 0 ){
+          return true
+        }                             
+        return false
       },
       findInDetail(id){
         for (let i = 0; i < this.details.length; i++) {
@@ -306,10 +469,20 @@
         let me=this;                    
         let AuthorizationHeader = {"Authorization" : "Bearer " + this.$store.state.token}
         let headers = {headers:AuthorizationHeader}
+        var obj ={
+            'IdUser':me.$store.state.user.IdUser,
+            'IdClient':me.clientByPhoneNumber[0]['idClient'],            
+            'TypeSale':me.typeSale,
+            'VoucherSeries':me.voucherSeries,
+            'VoucherNumber':me.voucherNumber,            
+            'TotalPrice':me.total,           
+            'Detail':me.details
+          }
+          console.log(obj)
         axios.post('api/sale/Create/',
           {
-            'IdUser':me.$store.state.user.idUser,
-            'IdClient':'',            
+            'IdUser':me.$store.state.user.IdUser,
+            'IdClient':me.clientByPhoneNumber[0]['idClient'],            
             'TypeSale':me.typeSale,
             'VoucherSeries':me.voucherSeries,
             'VoucherNumber':me.voucherNumber,            
@@ -345,9 +518,10 @@
         this.details = []
       },
       save() {
-        this.$emit('save',{ 
+        // this.$emit('save',{ 
           
-        })
+        // })
+        this.addNewSale()
       },
       cancel(){
         this.$emit('cancel',false)

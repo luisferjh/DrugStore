@@ -31,6 +31,28 @@ namespace DrugStore.Web.Controllers
             return Clients;
         }
 
+        // GET: api/Client/GetByPhoneNumber/phoneNumber
+        [HttpGet("[action]/{phoneNumber}")]
+        public async Task<IActionResult> GetByPhoneNumber([FromRoute] string phoneNumber)
+        {
+            var client = await _clientService.GetClientByPhoneNumber(phoneNumber);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(client);         
+        }
+
+        // GET: api/Client/ListInSale/phoneNumber
+        [HttpGet("[action]/{name}/{lastName}")]
+        public async Task<IEnumerable> ListInSale([FromRoute] string name, [FromRoute] string lastName)
+        {
+            var clients = await _clientService.ClientInSale(name, lastName);
+            return clients;
+        }
+
         // GET: api/Client/5
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)

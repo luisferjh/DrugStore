@@ -60,6 +60,48 @@ namespace DrugStore.Web.Services.People
                 ClientName = c.Name
             });
         }
+        public async Task<ClientViewModel> GetClientByPhoneNumber(string phoneNumber)
+        {
+            var client = await _context.Clients              
+                .Where(c => c.Condition == true)
+                .SingleOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
+
+            if (client == null)
+            {
+                return null;
+            }
+
+            return new ClientViewModel
+            {
+                IdClient = client.IdClient,
+                Name = client.Name,
+                LastName = client.LastName,
+                DocumentType = client.DocumentType,
+                DocumentNumber = client.DocumentNumber,
+                PhoneNumber = client.PhoneNumber,
+                Condition = client.Condition,
+            };
+        }
+
+        public async Task<IEnumerable<ClientViewModel>> ClientInSale(string name, string lastName)
+        {
+            var clients = await _context.Clients               
+                .Where(n => n.Name.Contains(name))
+                .Where(ln => ln.LastName.Contains(lastName))
+                .Where(c => c.Condition == true)
+                .ToListAsync();
+
+            return clients.Select(p => new ClientViewModel
+            {
+                IdClient = p.IdClient,
+                Name = p.Name,
+                LastName = p.LastName,
+                DocumentType = p.DocumentType,
+                DocumentNumber = p.DocumentNumber,
+                PhoneNumber = p.PhoneNumber,
+                Condition = p.Condition,        
+            });
+        }
 
         public async Task AddClient(CreateViewModel clientModel)
         {

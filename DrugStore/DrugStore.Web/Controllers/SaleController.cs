@@ -45,7 +45,7 @@ namespace DrugStore.Web.Controllers
         }
        
         // POST: api/Sale/Create
-        [HttpPost("action")]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Create([FromBody] CreateViewModel saleModel)
         {
             if (!ModelState.IsValid)

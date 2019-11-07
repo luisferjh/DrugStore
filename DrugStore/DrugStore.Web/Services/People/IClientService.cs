@@ -11,6 +11,8 @@ namespace DrugStore.Web.Services.People
     {
         Task<IEnumerable<ClientViewModel>> List();
         Task<ClientViewModel> GetClient(int id);
+        Task<ClientViewModel> GetClientByPhoneNumber(string phoneNumber);
+        Task<IEnumerable<ClientViewModel>> ClientInSale(string name, string lastName);
         Task AddClient(CreateViewModel clientModel);
         Task UpdateClient(UpdateViewModel clientModel);
         Task ActivateClient(int id);
