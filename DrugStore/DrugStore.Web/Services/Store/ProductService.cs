@@ -1,4 +1,5 @@
-﻿ using DrugStore.Data;
+﻿using DrugStore.Data;
+using System.Diagnostics;
 using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store.Product;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,7 @@ namespace DrugStore.Web.Services.Store
             if (product == null)
             {
                 return null;
-            }
+            }            
 
             return new ProductViewModel
             {

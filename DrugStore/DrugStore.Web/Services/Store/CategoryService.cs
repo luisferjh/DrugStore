@@ -48,19 +48,19 @@ namespace DrugStore.Web.Services.Store
             };
         }
 
-        public async Task AddCategory(CreateViewModel model)
-        {           
-            Category category = new Category
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Condition = model.Condition
-            };
+        //public async Task AddCategory(CreateViewModel model)
+        //{
+        //    Category category = new Category
+        //    {
+        //        Name = model.Name,
+        //        Description = model.Description,
+        //        Condition = model.Condition
+        //    };
 
-            _context.Categories.Add(category);
+        //    _context.Categories.Add(category);
 
-            await _context.SaveChangesAsync();            
-        }
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task UpdateCategory(UpdateViewModel model)
         {          
@@ -106,6 +106,20 @@ namespace DrugStore.Web.Services.Store
             //};
 
             return category;
+        }
+
+        public async Task AddCategory(CreateViewModel model)
+        {
+            Category category = new Category
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Condition = model.Condition
+            };
+
+            _context.Categories.Add(category);
+
+            await _context.SaveChangesAsync();
         }
     }
 }
