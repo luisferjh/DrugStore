@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using DrugStore.Web.Models.Store.Product;
@@ -38,7 +37,6 @@ namespace DrugStore.Web.Controllers
         public async Task<IEnumerable> ListInSale([FromRoute] string text)
         {
             var products = await _productService.ListInSale(text);
-            Debug.WriteLine("Hello, world!");
             return products;
         }
 
