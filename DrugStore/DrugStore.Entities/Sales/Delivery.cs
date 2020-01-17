@@ -10,8 +10,7 @@ namespace DrugStore.Entities.Sales
     public class Delivery
     {
         public int IdSale { get; set; }
-        public int IdClient { get; set; }
-        public string ClientName { get; set; }
+        public int IdClient { get; set; }    
         public string Adress { get; set; }      
         public string State { get; set; }
 
