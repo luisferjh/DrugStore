@@ -3,6 +3,7 @@ using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store;
 using DrugStore.Web.Models.Store.Category;
 using Microsoft.EntityFrameworkCore;
+using Repository.Interfaces.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace DrugStore.Web.Services.Store
             });
         }
 
-        public async Task<CategoryViewModel> GetCategory(int id)
+        public async Task<CategoryViewModel> Get(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
             if (Category == null)
@@ -48,19 +49,19 @@ namespace DrugStore.Web.Services.Store
             };
         }
 
-        //public async Task AddCategory(CreateViewModel model)
-        //{
-        //    Category category = new Category
-        //    {
-        //        Name = model.Name,
-        //        Description = model.Description,
-        //        Condition = model.Condition
-        //    };
+        public async Task AddCategory(CreateViewModel model)
+        {           
+            Category category = new Category
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Condition = model.Condition
+            };
 
-        //    _context.Categories.Add(category);
+            _context.Categories.Add(category);
 
-        //    await _context.SaveChangesAsync();
-        //}
+            await _context.SaveChangesAsync();            
+        }
 
         public async Task UpdateCategory(UpdateViewModel model)
         {          
@@ -108,18 +109,6 @@ namespace DrugStore.Web.Services.Store
             return category;
         }
 
-        public async Task AddCategory(CreateViewModel model)
-        {
-            Category category = new Category
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Condition = model.Condition
-            };
-
-            _context.Categories.Add(category);
-
-            await _context.SaveChangesAsync();
-        }
+     
     }
 }

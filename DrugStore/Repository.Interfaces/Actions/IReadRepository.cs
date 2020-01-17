@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Repository.Interfaces.Actions
 {
-    public interface IReadRepository<T> where T: class
+    public interface IReadRepository<T, Y> where T : class
     {
         Task<IEnumerable<T>> List();
+        Task<T> Get(Y id);
     }
 }

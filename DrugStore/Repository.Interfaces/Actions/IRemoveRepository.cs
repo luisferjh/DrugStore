@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Repository.Interfaces.Actions
 {
-    interface IRemoveRepository
+    public interface IRemoveRepository<T>
     {
+        void Delete(T id);
     }
 }

@@ -36,7 +36,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var Category = await _categoryService.GetCategory(id);
+            var Category = await _categoryService.Get(id);
 
             if (Category == null)
             {

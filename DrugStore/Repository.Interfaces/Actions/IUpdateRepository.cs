@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Repository.Interfaces.Actions
 {
-    interface IUpdateRepository
+    public interface IUpdateRepository<T> where T : class
     {
+        void Update(T model);
     }
 }
