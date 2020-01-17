@@ -108,7 +108,5 @@ namespace DrugStore.Web.Services.Store
 
             return category;
         }
-
-     
     }
 }

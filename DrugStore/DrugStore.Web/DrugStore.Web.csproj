@@ -27,7 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DrugStore.Data\DrugStore.Data.csproj" />
     <ProjectReference Include="..\DrugStore.Entities\DrugStore.Entities.csproj" />
-    <ProjectReference Include="..\Repository.Interfaces\Repository.Interfaces.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
