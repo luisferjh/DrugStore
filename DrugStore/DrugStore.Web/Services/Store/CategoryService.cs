@@ -3,6 +3,7 @@ using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store;
 using DrugStore.Web.Models.Store.Category;
 using Microsoft.EntityFrameworkCore;
+using Repository.Interfaces.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace DrugStore.Web.Services.Store
             });
         }
 
-        public async Task<CategoryViewModel> GetCategory(int id)
+        public async Task<CategoryViewModel> Get(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
             if (Category == null)
