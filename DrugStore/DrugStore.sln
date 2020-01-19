@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStore.Data", "DrugStore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStore.Web", "DrugStore.Web\DrugStore.Web.csproj", "{7CFAFEFA-35D5-4679-A34B-55809510CCE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrugStore.Test", "DrugStore.Test\DrugStore.Test.csproj", "{7D64AC15-A0B6-4FD8-9777-FC9C17BCEAF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrugStore.Test", "DrugStore.Test\DrugStore.Test.csproj", "{7D64AC15-A0B6-4FD8-9777-FC9C17BCEAF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{668DE60B-7B77-47D6-A4C5-09DCD45CCD8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UOW", "UOW", "{41F76CAB-CB09-449C-88AF-317F32E580FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Interfaces", "Repository.Interfaces\Repository.Interfaces.csproj", "{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +39,16 @@ Global
 		{7D64AC15-A0B6-4FD8-9777-FC9C17BCEAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D64AC15-A0B6-4FD8-9777-FC9C17BCEAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D64AC15-A0B6-4FD8-9777-FC9C17BCEAF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D0F42C41-3547-40E5-A105-DD6F5DE0ECC9} = {668DE60B-7B77-47D6-A4C5-09DCD45CCD8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {89C00972-34A4-4B32-A8AB-C10D385D7711}

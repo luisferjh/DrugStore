@@ -3,7 +3,6 @@ using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store;
 using DrugStore.Web.Models.Store.Category;
 using Microsoft.EntityFrameworkCore;
-using Repository.Interfaces.Actions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DrugStore.Web.Services.Store
 {
-    public class CategoryService:ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly DbContextDrugStore _context;
 
@@ -32,7 +31,7 @@ namespace DrugStore.Web.Services.Store
             });
         }
 
-        public async Task<CategoryViewModel> Get(int id)
+        public async Task<CategoryViewModel> GetCategory(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
             if (Category == null)
@@ -108,5 +107,6 @@ namespace DrugStore.Web.Services.Store
 
             return category;
         }
+     
     }
 }
