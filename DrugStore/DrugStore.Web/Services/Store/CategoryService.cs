@@ -31,7 +31,7 @@ namespace DrugStore.Web.Services.Store
             });
         }
 
-        public async Task<CategoryViewModel> GetCategory(int id)
+        public async Task<CategoryViewModel> Get(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
             if (Category == null)
@@ -62,7 +62,7 @@ namespace DrugStore.Web.Services.Store
             await _context.SaveChangesAsync();            
         }
 
-        public async Task UpdateCategory(UpdateViewModel model)
+        public async Task Update(UpdateViewModel model)
         {          
             var category = await _context.Categories.FirstOrDefaultAsync(c =>
             c.IdCategory == model.IdCategory);            
@@ -75,7 +75,7 @@ namespace DrugStore.Web.Services.Store
                                   
         }
 
-        public async Task DeleteCategory(Category Pcategory)
+        public async Task Delete(Category Pcategory)
         {          
             //var category = await _context.Categories.FindAsync(id);
 
@@ -107,6 +107,15 @@ namespace DrugStore.Web.Services.Store
 
             return category;
         }
-     
+
+        public Task Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Delete(IEnumerable<Category> t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

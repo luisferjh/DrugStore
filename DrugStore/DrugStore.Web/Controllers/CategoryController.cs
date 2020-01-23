@@ -36,7 +36,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var Category = await _categoryService.GetCategory(id);
+            var Category = await _categoryService.Get(id);
 
             if (Category == null)
             {
@@ -86,7 +86,7 @@ namespace DrugStore.Web.Controllers
 
             try
             {
-                await _categoryService.UpdateCategory(model);
+                await _categoryService.Update(model);
             }
             catch (DbUpdateException)
             {
@@ -118,7 +118,7 @@ namespace DrugStore.Web.Controllers
            
             try
             {
-                await _categoryService.DeleteCategory(category);
+                await _categoryService.Delete(category);
             }
             catch (DbUpdateException ex)
             {
