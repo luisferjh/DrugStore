@@ -7,7 +7,7 @@ namespace Repository.Interfaces.Actions
 {
     public interface IReadRepository<T, Y> where T: class
     {
-        Task<IEnumerable<T>> List();
-        Task<T> Get(Y id);
+        Task<IEnumerable<T>> ListAsync();
+        Task<T> GetAsync(Y id);
     }
 }

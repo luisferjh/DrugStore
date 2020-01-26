@@ -1,6 +1,8 @@
 using System;
 using System.Text;
+using AutoMapper;
 using DrugStore.Data;
+using DrugStore.Web.Mappings;
 using DrugStore.Web.Services.Orders;
 using DrugStore.Web.Services.People;
 using DrugStore.Web.Services.Sales;
@@ -48,6 +50,20 @@ namespace DrugStore.Web
 
             services.AddDbContext<DbContextDrugStore>(options =>
             options.UseSqlServer(Configuration["DrugStore:ConnectionString"]));
+
+            //autoMapper  
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //services.AddMvc().AddJsonOptions(ConfigureJson).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -61,7 +77,7 @@ namespace DrugStore.Web
             services.AddTransient<ISaleService, SaleService>();
             services.AddTransient<IDeliveryService, DeliveryService>();
             services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();           
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

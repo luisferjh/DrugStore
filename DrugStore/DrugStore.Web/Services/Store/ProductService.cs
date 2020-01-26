@@ -1,4 +1,5 @@
-﻿ using DrugStore.Data;
+﻿using AutoMapper;
+using DrugStore.Data;
 using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store.Product;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,15 @@ namespace DrugStore.Web.Services.Store
     {
         //Brought context of database 
         private readonly DbContextDrugStore _context;
-        public ProductService(DbContextDrugStore context)
+        private readonly IMapper _mapper;
+
+        public ProductService(DbContextDrugStore context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<ProductViewModel> GetProduct(int id)
+        public async Task<ProductViewModel> GetAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);
 
@@ -27,19 +31,21 @@ namespace DrugStore.Web.Services.Store
                 return null;
             }
 
-            return new ProductViewModel
-            {
-                IdProduct = product.IdProduct,
-                IdCategory = product.IdCategory,
-                IdLaboratory = product.IdLaboratory,
-                ProductName = product.ProductName,
-                BarCode = product.BarCode,
-                Indicative = product.Indicative,
-                Stock = product.Stock,
-                UnitPrice = product.UnitPrice,
-                SalePrice = product.SalePrice,
-                Condition = product.Condition
-            };
+            return _mapper.Map<ProductViewModel>(product);
+
+            //return new ProductViewModel
+            //{
+            //    IdProduct = product.IdProduct,
+            //    IdCategory = product.IdCategory,
+            //    IdLaboratory = product.IdLaboratory,
+            //    ProductName = product.ProductName,
+            //    BarCode = product.BarCode,
+            //    Indicative = product.Indicative,
+            //    Stock = product.Stock,
+            //    UnitPrice = product.UnitPrice,
+            //    SalePrice = product.SalePrice,
+            //    Condition = product.Condition
+            //};
         }
 
         public async Task<ProductViewModel> GetProductByBarCode(string barCode)
@@ -55,45 +61,49 @@ namespace DrugStore.Web.Services.Store
                 return null;
             }
 
-            return new ProductViewModel
-            {
-                IdProduct = product.IdProduct,
-                IdCategory = product.IdCategory,
-                Category = product.Category.Name,
-                IdLaboratory = product.IdLaboratory,
-                Laboratory = product.Laboratory.LaboratoryName,
-                ProductName = product.ProductName,
-                BarCode = product.BarCode,
-                Indicative = product.Indicative,
-                Stock = product.Stock,
-                UnitPrice = product.UnitPrice,
-                SalePrice = product.SalePrice,
-                Condition = product.Condition
-            };
+            return _mapper.Map<ProductViewModel>(product);
+
+            //return new ProductViewModel
+            //{
+            //    IdProduct = product.IdProduct,
+            //    IdCategory = product.IdCategory,
+            //    Category = product.Category.Name,
+            //    IdLaboratory = product.IdLaboratory,
+            //    Laboratory = product.Laboratory.LaboratoryName,
+            //    ProductName = product.ProductName,
+            //    BarCode = product.BarCode,
+            //    Indicative = product.Indicative,
+            //    Stock = product.Stock,
+            //    UnitPrice = product.UnitPrice,
+            //    SalePrice = product.SalePrice,
+            //    Condition = product.Condition
+            //};
         }
 
-        public async Task<IEnumerable<ProductViewModel>> List()
+        public async Task<IEnumerable<ProductViewModel>> ListAsync()
         {
-            var product = await _context.Products
+            var products = await _context.Products
                 .Include(c => c.Category)
                 .Include(l => l.Laboratory)
                 .ToListAsync();
 
-            return product.Select(p => new ProductViewModel
-            {
-                IdProduct = p.IdProduct,
-                IdCategory = p.IdCategory,
-                Category = p.Category.Name,
-                IdLaboratory = p.IdLaboratory,
-                Laboratory = p.Laboratory.LaboratoryName,
-                ProductName = p.ProductName,
-                BarCode = p.BarCode,
-                Indicative = p.Indicative,
-                Stock = p.Stock,
-                UnitPrice = p.UnitPrice,
-                SalePrice = p.SalePrice,
-                Condition = p.Condition
-            });
+            return _mapper.Map<IEnumerable<ProductViewModel>>(products);
+
+            //return product.Select(p => new ProductViewModel
+            //{
+            //    IdProduct = p.IdProduct,
+            //    IdCategory = p.IdCategory,
+            //    Category = p.Category.Name,
+            //    IdLaboratory = p.IdLaboratory,
+            //    Laboratory = p.Laboratory.LaboratoryName,
+            //    ProductName = p.ProductName,
+            //    BarCode = p.BarCode,
+            //    Indicative = p.Indicative,
+            //    Stock = p.Stock,
+            //    UnitPrice = p.UnitPrice,
+            //    SalePrice = p.SalePrice,
+            //    Condition = p.Condition
+            //});
         }
 
         public async Task<IEnumerable<ProductViewModel>> ListInSale(string text)
@@ -105,63 +115,70 @@ namespace DrugStore.Web.Services.Store
                 .Where(c => c.Condition == true)
                 .ToListAsync();
 
-            return product.Select(p => new ProductViewModel
-            {
-                IdProduct = p.IdProduct,
-                IdCategory = p.IdCategory,
-                Category = p.Category.Name,
-                IdLaboratory = p.IdLaboratory,
-                Laboratory = p.Laboratory.LaboratoryName,
-                ProductName = p.ProductName,
-                BarCode = p.BarCode,
-                Indicative = p.Indicative,
-                Stock = p.Stock,
-                UnitPrice = p.UnitPrice,
-                SalePrice = p.SalePrice,
-                Condition = p.Condition
-            });
+            return _mapper.Map<List<ProductViewModel>>(product);
+            
+            //return product.Select(p => new ProductViewModel
+            //{
+            //    IdProduct = p.IdProduct,
+            //    IdCategory = p.IdCategory,
+            //    Category = p.Category.Name,
+            //    IdLaboratory = p.IdLaboratory,
+            //    Laboratory = p.Laboratory.LaboratoryName,
+            //    ProductName = p.ProductName,
+            //    BarCode = p.BarCode,
+            //    Indicative = p.Indicative,
+            //    Stock = p.Stock,
+            //    UnitPrice = p.UnitPrice,
+            //    SalePrice = p.SalePrice,
+            //    Condition = p.Condition
+            //});
         }
 
-        public async Task AddProduct(CreateViewModel model)
+        public async Task AddAsync(CreateViewModel model)
         {
-            Product product = new Product
-            {
-                IdCategory = model.IdCategory,
-                IdLaboratory = model.IdLaboratory,
-                ProductName = model.ProductName,
-                BarCode = model.BarCode,
-                Indicative = model.Indicative,
-                Stock = model.Stock,
-                UnitPrice = model.UnitPrice,
-                SalePrice = model.SalePrice,
-                Condition = model.Condition
-            };
+           
+            //Product product = new Product
+            //{
+            //    IdCategory = model.IdCategory,
+            //    IdLaboratory = model.IdLaboratory,
+            //    ProductName = model.ProductName,
+            //    BarCode = model.BarCode,
+            //    Indicative = model.Indicative,
+            //    Stock = model.Stock,
+            //    UnitPrice = model.UnitPrice,
+            //    SalePrice = model.SalePrice,
+            //    Condition = model.Condition
+            //};
+
+            Product product = _mapper.Map<Product>(model);
 
             await _context.Products.AddAsync(product);
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateProduct(UpdateViewModel model)
+        public async Task UpdateAsync(UpdateViewModel model)
         {
             var product = await _context.Products.FirstOrDefaultAsync(p =>
             p.IdProduct == model.IdProduct);
 
-            product.IdCategory = model.IdCategory;
-            product.IdLaboratory = model.IdLaboratory;
-            product.ProductName = model.ProductName;
-            product.BarCode = model.BarCode;
-            product.Indicative = model.Indicative;
-            product.Stock = model.Stock;
-            product.UnitPrice = model.UnitPrice;
-            product.SalePrice = model.SalePrice;       
+            _mapper.Map<Product>(model);
+
+            //product.IdCategory = model.IdCategory;
+            //product.IdLaboratory = model.IdLaboratory;
+            //product.ProductName = model.ProductName;
+            //product.BarCode = model.BarCode;
+            //product.Indicative = model.Indicative;
+            //product.Stock = model.Stock;
+            //product.UnitPrice = model.UnitPrice;
+            //product.SalePrice = model.SalePrice;       
 
             await _context.SaveChangesAsync();
 
         }
 
         //Delete product by id
-        public async Task DeleteProduct(Product product)
+        public async Task DeleteAsync(Product product)
         {
             _context.Products.Remove(product);
 
@@ -204,5 +221,14 @@ namespace DrugStore.Web.Services.Store
             return product;
         }
 
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(IEnumerable<Product> t)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,8 +7,8 @@ namespace Repository.Interfaces.Actions
 {
     public interface IRemoveRepository<T, Y> where T : class 
     {
-        Task Delete(T model);
-        Task Delete(Y id);
-        Task Delete(IEnumerable<T> t);
+        Task DeleteAsync(T model);
+        Task DeleteAsync(Y id);
+        Task DeleteAsync(IEnumerable<T> t);
     }
 }

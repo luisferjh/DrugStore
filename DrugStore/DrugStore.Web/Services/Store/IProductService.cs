@@ -1,5 +1,6 @@
 ﻿  using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store.Product;
+using Repository.Interfaces.Actions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace DrugStore.Web.Services.Store
 {
-    public interface IProductService
+    public interface IProductService : IReadRepository<ProductViewModel, int>,
+                                       ICreateRepository<CreateViewModel>,
+                                       IUpdateRepository<UpdateViewModel>,
+                                       IRemoveRepository<Product, int>
     {
-        Task<IEnumerable<ProductViewModel>> List();
-        Task<ProductViewModel> GetProduct(int id);
+        //Task<IEnumerable<ProductViewModel>> List();
+        //Task<ProductViewModel> GetProduct(int id);
         Task<ProductViewModel> GetProductByBarCode(string barCode);
         Task<IEnumerable<ProductViewModel>> ListInSale(string text);
-        Task AddProduct(CreateViewModel model);
-        Task UpdateProduct(UpdateViewModel model);
-        Task DeleteProduct(Product Pproduct);
+        //Task AddProduct(CreateViewModel model);
+        //Task UpdateProduct(UpdateViewModel model);
+        //Task DeleteProduct(Product Pproduct);
         Task ActivateProduct(int id);
         Task DeactivateProduct(int id);
         Task<bool> ProductExists(int id);

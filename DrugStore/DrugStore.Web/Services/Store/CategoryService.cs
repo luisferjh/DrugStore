@@ -1,4 +1,5 @@
-﻿using DrugStore.Data;
+﻿using AutoMapper;
+using DrugStore.Data;
 using DrugStore.Entities.Store;
 using DrugStore.Web.Models.Store;
 using DrugStore.Web.Models.Store.Category;
@@ -13,42 +14,35 @@ namespace DrugStore.Web.Services.Store
     public class CategoryService : ICategoryService
     {
         private readonly DbContextDrugStore _context;
+        private readonly IMapper _mapper;
 
-        public CategoryService(DbContextDrugStore context)
+        public CategoryService(DbContextDrugStore context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CategoryViewModel>> List()
+        public async Task<IEnumerable<CategoryViewModel>> ListAsync()
         {
             var Categories = await _context.Categories.ToListAsync();
-            return Categories.Select(c => new CategoryViewModel
-            {
-                IdCategory = c.IdCategory,
-                Name = c.Name,
-                Description = c.Description,
-                Condition = c.Condition
-            });
+
+            return _mapper.Map<List<CategoryViewModel>>(Categories);
+         
         }
 
-        public async Task<CategoryViewModel> Get(int id)
+        public async Task<CategoryViewModel> GetAsync(int id)
         {
             var Category = await _context.Categories.FindAsync(id);
             if (Category == null)
             {
                 return null;
             }
-
-            return new CategoryViewModel
-            {
-                IdCategory = Category.IdCategory,
-                Name = Category.Name,
-                Description = Category.Description,
-                Condition = Category.Condition
-            };
+            
+            return _mapper.Map<CategoryViewModel>(Category);
+       
         }
 
-        public async Task AddCategory(CreateViewModel model)
+        public async Task AddAsync(CreateViewModel model)
         {           
             Category category = new Category
             {
@@ -62,7 +56,7 @@ namespace DrugStore.Web.Services.Store
             await _context.SaveChangesAsync();            
         }
 
-        public async Task Update(UpdateViewModel model)
+        public async Task UpdateAsync(UpdateViewModel model)
         {          
             var category = await _context.Categories.FirstOrDefaultAsync(c =>
             c.IdCategory == model.IdCategory);            
@@ -75,7 +69,7 @@ namespace DrugStore.Web.Services.Store
                                   
         }
 
-        public async Task Delete(Category Pcategory)
+        public async Task DeleteAsync(Category Pcategory)
         {          
             //var category = await _context.Categories.FindAsync(id);
 
@@ -108,12 +102,12 @@ namespace DrugStore.Web.Services.Store
             return category;
         }
 
-        public Task Delete(int id)
+        public Task DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Delete(IEnumerable<Category> t)
+        public Task DeleteAsync(IEnumerable<Category> t)
         {
             throw new NotImplementedException();
         }

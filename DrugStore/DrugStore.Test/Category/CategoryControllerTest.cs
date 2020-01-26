@@ -28,7 +28,8 @@ namespace DrugStore.Test
             DbInitialize db = new DbInitialize();
             db.Initial(context);
 
-            service = new CategoryService(context);
+            // corregir o arreglar esto para adaptar el IMapper : PENDIENTE
+            //service = new CategoryService(context);
         }
 
         #region Get By Id

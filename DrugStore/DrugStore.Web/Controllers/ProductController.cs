@@ -28,7 +28,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable> List()
         {
-            var products = await _productService.List();
+            var products = await _productService.ListAsync();
             return products;
         }
 
@@ -44,7 +44,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
-            var product = await _productService.GetProduct(id);
+            var product = await _productService.GetAsync(id);
 
             if (product == null)
             {
@@ -79,7 +79,7 @@ namespace DrugStore.Web.Controllers
 
             try
             {
-                await _productService.AddProduct(product);
+                await _productService.AddAsync(product);
             }
             catch (DbUpdateException)
             {
@@ -108,7 +108,7 @@ namespace DrugStore.Web.Controllers
 
             try
             {
-                await _productService.UpdateProduct(product);
+                await _productService.UpdateAsync(product);
             }
             catch (NullReferenceException)
             {
@@ -137,7 +137,7 @@ namespace DrugStore.Web.Controllers
             }
             try
             {
-                await _productService.DeleteProduct(product);
+                await _productService.DeleteAsync(product);
             }
             catch (DbUpdateException)
             {

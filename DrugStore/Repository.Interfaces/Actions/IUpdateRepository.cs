@@ -7,6 +7,6 @@ namespace Repository.Interfaces.Actions
 {
     public interface IUpdateRepository<T> where T: class
     {
-        Task Update(T model);
+        Task UpdateAsync(T model);
     }
 }

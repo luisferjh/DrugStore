@@ -7,6 +7,6 @@ namespace Repository.Interfaces.Actions
 {
     public interface ICreateRepository<T> where T: class
     {
-        Task AddCategory(T model);
+        Task AddAsync(T model);
     }
 }

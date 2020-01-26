@@ -27,7 +27,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]")]
         public async Task<IEnumerable> List()
         {
-            var Categories = await _categoryService.List();
+            var Categories = await _categoryService.ListAsync();
             //return Ok(Categories);
             return Categories;
         }
@@ -36,7 +36,7 @@ namespace DrugStore.Web.Controllers
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            var Category = await _categoryService.Get(id);
+            var Category = await _categoryService.GetAsync(id);
 
             if (Category == null)
             {
@@ -56,7 +56,7 @@ namespace DrugStore.Web.Controllers
 
             try
             {
-                await _categoryService.AddCategory(category);
+                await _categoryService.AddAsync(category);
             }
             catch (DbUpdateException)
             {
@@ -86,7 +86,7 @@ namespace DrugStore.Web.Controllers
 
             try
             {
-                await _categoryService.Update(model);
+                await _categoryService.UpdateAsync(model);
             }
             catch (DbUpdateException)
             {
@@ -118,7 +118,7 @@ namespace DrugStore.Web.Controllers
            
             try
             {
-                await _categoryService.Delete(category);
+                await _categoryService.DeleteAsync(category);
             }
             catch (DbUpdateException ex)
             {
